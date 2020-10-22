@@ -1,0 +1,344 @@
+<html>
+
+<head>
+    <link rel="canonical" href="https://growthfile.com/case-studies/IND-Innovations.html">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case study - IND Innovations</title>
+    <link rel="icon" type="image/png" href="../img/favicon.ico" />
+
+    <link rel="preload" href="../css/static.css" as="style">
+    <link rel="preload" href="https://unpkg.com/material-components-web@7.0.0/dist/material-components-web.min.css"
+        as="style">
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@7.0.0/dist/material-components-web.min.css">
+    <link rel="stylesheet" href="../css/static.css">
+
+    <link href="../css/campaign.css" rel="stylesheet" type="text/css">
+    <link href="../css/case-studies.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <script defer src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/7.1.0/firebase-auth.js"></script>
+    
+    <script defer src="https://unpkg.com/material-components-web@7.0.0/dist/material-components-web.min.js"></script>
+
+</head>
+
+<body class="mdc-typography mdc-typography--body1">
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WTG6JLT" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <header class="mdc-top-app-bar mdc-top-app-bar--fixed" data-mdc-auto-init="MDCTopAppBar" style="z-index: 7;">
+        
+        <div class="mdc-top-app-bar__row content-max-width">
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+
+                <a class="mdc-top-app-bar__action-item mdc-icon-button icon-expand" aria-label="logo" href="../">
+                    <picture>
+                        <source srcset="../../img/webp/icon.webp" type="image/webp" id="header-logo">
+                        <source srcset="../../img/icon.png" type="image/png" id="header-logo">
+                        <img src="../../img/icon.png" id="header-logo" loading="lazy">
+                    </picture>
+                </a>
+                <span class="mdc-top-app-bar__title">
+                    <strong>GROWTH</strong>FILE
+                </span>
+                <div class="top-bar-navigation" style="margin-left: 20px;">
+                    <a class="mdc-top-app-bar__action-item mdc-button" aria-label="features"
+                        data-mdc-auto-init="MDCRipple" href="../features.html"> Features
+                    </a>
+
+                    <a class="mdc-top-app-bar__action-item mdc-button" aria-label="pricing"
+                        data-mdc-auto-init="MDCRipple" href="../pricing.html"> Pricing
+                    </a>
+                    <a class="mdc-top-app-bar__action-item mdc-button" aria-label="log-in"
+                        data-mdc-auto-init="MDCRipple" href="../faq.html"> FAQ
+                    </a>
+                </div>
+            </section>
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+
+
+                <span class="inline-flex mdc-top-app-bar__action-item call-us--icon mdc-top-app-bar__action-item"><i
+                        class="material-icons">phone</i>
+
+                    <a class="no-underline mdc-theme--on-primary" href="tel:+918595422858"> +91 85954 22858</a>
+                </span>
+                <a class="mdc-top-app-bar__action-item mdc-button" aria-label="log-in" data-mdc-auto-init="MDCRipple"
+                    href="./login" id='app-bar-login'>
+                    Log in
+                </a>
+                <a class="mdc-top-app-bar__action-item mdc-button mdc-theme--primary" style="background-color: white;"
+                    aria-label="log-in" data-mdc-auto-init="MDCRipple" href="./signup.html" id='app-bar-signup'>
+                    Sign up
+                </a>
+                <div class="top-bar-menu">
+                    <button id="menu"
+                        class="mdc-icon-button mdc-top-app-bar__action-item mdc-icon-button hamburger-menu"
+                        aria-label="menu" aria-hidden="true" aria-pressed="false">
+                        <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">clear</i>
+                        <i class="material-icons mdc-icon-button__icon">menu</i>
+                    </button>
+                </div>
+            </section>
+        </div>
+    </header>
+    <aside class="mdc-drawer mdc-drawer--modal mdc-top-app-bar--fixed-adjust mdc-drawer--static-pages" style="width:100%"
+        data-mdc-auto-init="MDCDrawer">
+        <div class="mdc-drawer__content">
+            <nav class="mdc-list">
+                <a class="mdc-list-item mdc-list-item--activated" href="../features.html" aria-current="page"
+                    tabindex="0">
+
+                    <span class="mdc-list-item__text">Features</span>
+                </a>
+
+                <li class="mdc-list-divider"></li>
+                <a class="mdc-list-item" href="../pricing.html" tabindex="-1">
+                    <span class="mdc-list-item__text">Pricing</span>
+                </a>
+                <li class="mdc-list-divider"></li>
+                <a class="mdc-list-item" href="../faq.html" tabindex="-1">
+                    <span class="mdc-list-item__text">FAQ</span>
+                </a>
+                <li class="mdc-list-divider"></li>
+            </nav>
+        </div>
+    </aside>
+
+    <div class="mdc-drawer-scrim"></div>
+    <div class="mdc-top-app-bar--fixed-adjust page-content-section case-study">
+     
+
+        <div class="banner-large mdc-theme--primary-bg mdc-typography--headline4 mdc-theme--on-primary">
+            <i class="material-icons" style="
+            font-size: 100px;
+        ">business</i>
+            <p class="highlight-headline bold">
+                How IND Innovations Leveraged Growthfile To Achieve A Staggering Increase In Employee Productivity
+            </p>
+        </div>
+
+        <section class="section about-us-section">
+            <div class="content--tablet-width">
+                <div class="mdc-layout-grid">
+                    <div class="mdc-layout-grid__inner">
+                        <div
+                            class="mdc-layout-grid__cell--span-9-desktop mdc-layout-grid__cell--span-5-tablet mdc-layout-grid__cell--span-4-phone">
+
+                            <div class="">
+                                <div class="mdc-typography--headline5 headline">About IND Innovations</div>
+                                <p>
+                                    IND Innovations is a global ICT solution, consulting and managed services company
+                                    headquartered in New Delhi, India. They have several high profile clients including
+                                    Huawei and have a strong presence in over 30 countries. In India, they have close to
+                                    500 employees who go out in the field and carry out services.
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            class="mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-3-tablet mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--align-middle">
+
+                            <div class="company-details">
+                                <div class="mdc-typography--subtitle2 type">Industry</div>
+                                <div class="mdc-typography--headline6 value">IT Service Provider</div>
+                            </div>
+                            <div class="company-details">
+                                <div class="mdc-typography--subtitle2 type">Size</div>
+                                <div class="mdc-typography--headline6 value">500</div>
+                            </div>
+                            <div class="company-details">
+                                <div class="mdc-typography--subtitle2 type">Location</div>
+                                <div class="mdc-typography--headline6 value">Delhi NCR</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+        <div class="mdc-layout-grid  light-blue--background">
+            <div class="mdc-layout-grid__inner">
+                <div class="mdc-layout-grid__cell--span-2-desktop column-filler"></div>
+                <div class="mdc-layout-grid__cell infographics">
+                    <div class="info-content text-center">
+                        <i class="material-icons mdc-theme--primary">group_add</i>
+                        <div class="mdc-typography--headline5 mt-10 bold">500</div>
+                        <div class="mdc-typography--headline6">Team size</div>
+                    </div>
+                </div>
+
+                <div class="mdc-layout-grid__cell infographics">
+                    <div class="info-content text-center">
+                        <i class="material-icons mdc-theme--primary">trending_up</i>
+                        <div class="mdc-typography--headline5 mt-10 bold">30%</div>
+                        <div class="mdc-typography--headline6">Efficiency Increased</div>
+                    </div>
+                </div>
+                <div class="mdc-layout-grid__cell--span-2-desktop column-filler"></div>
+
+            </div>
+        </div>
+        <section class="section">
+            <div class="content--tablet-width">
+                <div class="mdc-typography--headline5 bold headline">What was the Business Problem?</div>
+                <p>
+                    Naturally, a company as diversified and dynamic as IND Innovations had several logistical and
+                    administrative issues that were cropping up. Their employees had to go on long-term assignments to
+                    different towns and cities to help set-up networks and execute any servicing.
+                </p>
+                <p>
+                    The company was finding it highly complicated and time-consuming to constantly call up employees and
+                    inform them of assignments or to receive updates. Furthermore, there was no accurate and reliable
+                    way of evaluating their field work. It was at this point that Growthfile stepped in.
+                </p>
+            </div>
+        </section>
+
+        <section class="section light-blue--background">
+            <div class="content--tablet-width">
+                <div class="mdc-typography--headline5 bold headline">Why was it important to address this issue?
+                </div>
+                <p>
+                    Supervising each and every employee is a near-impossible task for any business enterprise, but it is
+                    highly important to know the whereabouts of your field employees. It gives a clear and comprehensive
+                    idea about your company, which becomes useful for future decisions
+                </p>
+                <p>Business revenues are dependent on the functioning of employees, so it becomes crucial to monitor
+                    them in an effective way. As per a 2018 GlobalData study, only 48% employees efficiently use company
+                    time and resources.
+                </p>
+                <p>Growthfile is one of the best tools out there to assist in this regard.
+                </p>
+            </div>
+        </section>
+
+        <section class="section solutions">
+            <div class="content--tablet-width">
+                <div class="mdc-layout-grid">
+                    <div class="mdc-layout-grid__inner">
+                        <div
+                            class="mdc-layout-grid__cell--span-8-desktop mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-4-tablet">
+                            <div class="mdc-typography--headline5 bold headline">What was the solution?</div>
+                            <p>
+                                IND Innovations created an Office account on Growthfile and instructed all of their
+                                employees in India to join it, download the mobile app and check-in regularly.
+                            </p>
+                            <p>
+                                The smooth, simple interface of the app ensured that everyone was able to navigate it
+                                with ease. Employees were informed that their performance and compensation were
+                                dependent on their timely check-in and documentation of work done in the app.
+                            </p>
+
+                        </div>
+                        <div
+                            class="mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-4-tablet">
+                            <picture>
+                                <source srcset="" type="image/webp">
+                                <source srcset="../img/proof.jpg" type="image/jpg">
+                                <img src="../img/proof.jpg" loading="lazy">
+                            </picture>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section class="section light-blue--background">
+            <div class="content--tablet-width">
+                <div class="mdc-typography--headline5 bold headline">What was the impact?</div>
+                <div class="mdc-typography--headline6">
+
+                </div>
+                <p>
+                    The company noted that in the week following Growthfile’s introduction, on time duty reporting by
+                    employees and their efficiency shot up by almost 30% and the numbers continued to surge.
+                </p>
+                <p>
+                    The CEO was regularly updated about employee performance and received clear, coherent daily reports
+                    about the work done. This made it convenient to arrive at informed decisions regarding the company,
+                    and to free up company time for other productive outlets.
+                </p>
+                <p>
+                    Optimisation of employee performance and maximum utilisation of company time was soon reported by
+                    the company!
+                </p>
+                <p>
+                    A thorough optimisation of work delegation was accomplished.
+
+                </p>
+
+            </div>
+        </section>
+        <section class="section">
+            <div class="content-max-width">
+
+                <p class="highlight-headline mdc-theme--primary">
+                    Optimisation of employee performance and maximum utilisation of company time was soon reported by
+                    the company!
+
+                </p>
+            </div>
+        </section>
+        <section class="section" style="padding-bottom: 50px;">
+            <div class="content-max-width text-center">
+                <p class="mdc-typography--headline4 bold mt-0">Make the switch to Growthfile now
+                </p>
+                <a class="mdc-button mdc-button--raised " href="../signup.html">Sign up</a>
+            </div>
+        </section>
+    </div>
+    <footer>
+
+    </footer>
+
+    <script defer src="../js/env-config.js"></script>
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WTG6JLT');
+    </script>
+    <!-- End Google Tag Manager -->
+    <script src="../js/core.js"></script>
+    <script src="../js/static.js"></script>
+    <script>
+        function isElementInViewport(el, windowScrollTop) {
+            var rect = el.getBoundingClientRect();
+            console.log(rect)
+            const inView = rect.bottom > 0 &&
+                rect.right > 0 &&
+                rect.left < (window.innerWidth || document.documentElement.clientWidth) &&
+                rect.top < (window.innerHeight || document.documentElement.clientHeight)
+            console.log(windowScrollTop >= rect.top)
+            if (windowScrollTop >= rect.top + 200) return true
+        }
+        window.addEventListener('scroll', function (e) {
+            // console.log(isElementInViewport(document.querySelector('.solutions img')))
+            if (isElementInViewport(document.querySelector('.solutions img'), window.scrollY)) {
+                document.querySelector('.solutions img').classList.add('visible')
+            }
+        })
+    </script>
+</body>
+
+</html>

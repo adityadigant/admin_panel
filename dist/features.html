@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <link rel="canonical" href="https://growthfile.com/features">
+
+  <!-- End Google Tag Manager -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Features</title>
+  <link rel="shortcut icon" type="image/png" href="img/favicon.ico" />
+
+  <link rel="preload" href="./css/static.css" as="style">
+  <link rel="preload" href="https://unpkg.com/material-components-web@7.0.0/dist/material-components-web.min.css"
+    as="style">
+  <link rel="stylesheet" href="https://unpkg.com/material-components-web@7.0.0/dist/material-components-web.min.css">
+  <link rel="stylesheet" href="./css/static.css">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+  <script defer src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/7.1.0/firebase-auth.js"></script>
+  
+  <script defer src="https://unpkg.com/material-components-web@7.0.0/dist/material-components-web.min.js"></script>
+
+</head>
+
+<body class="mdc-typography mdc-typography--body1">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WTG6JLT" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <header class="mdc-top-app-bar mdc-top-app-bar--fixed mdc-elevation--z4 data-mdc-auto-init="MDCTopAppBar" style="z-index: 7;">
+ 
+    <div class="mdc-top-app-bar__row content-max-width">
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+
+        <a class="mdc-top-app-bar__action-item mdc-icon-button icon-expand" aria-label="logo" href="./">
+          <img src="../../img/icon.png" id="header-logo">
+        </a>
+        <span class="mdc-top-app-bar__title">
+          <strong>GROWTH</strong>FILE
+        </span>
+        <div class="top-bar-navigation" style="margin-left: 20px;">
+          <a class="mdc-top-app-bar__action-item mdc-button" aria-label="features" data-mdc-auto-init="MDCRipple" href="./features.html"> Features
+          </a>
+
+          <a class="mdc-top-app-bar__action-item mdc-button" aria-label="pricing" data-mdc-auto-init="MDCRipple" href="./pricing.html"> Pricing
+          </a>
+          <a class="mdc-top-app-bar__action-item mdc-button" aria-label="log-in" data-mdc-auto-init="MDCRipple" href="./faq.html"> FAQ
+          </a>
+        </div>
+      </section>
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+
+
+        <span class="inline-flex mdc-top-app-bar__action-item call-us--icon mdc-top-app-bar__action-item"><i class="material-icons">phone</i>
+
+          <a class="no-underline mdc-theme--on-primary" href="tel:+918595422858"> +91 85954 22858</a>
+        </span>
+        <a class="mdc-top-app-bar__action-item mdc-button" aria-label="log-in" data-mdc-auto-init="MDCRipple" href="./login" id='app-bar-login'>
+          Log in
+        </a>
+        <a class="mdc-top-app-bar__action-item mdc-button mdc-theme--primary" style="background-color: white;" aria-label="log-in" data-mdc-auto-init="MDCRipple" href="./signup.html" id='app-bar-signup'>
+          Sign up
+        </a>
+        <div class="top-bar-menu">
+          <button id="menu" class="mdc-icon-button mdc-top-app-bar__action-item mdc-icon-button hamburger-menu" aria-label="menu" aria-hidden="true" aria-pressed="false">
+            <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">clear</i>
+            <i class="material-icons mdc-icon-button__icon">menu</i>
+          </button>
+        </div>
+      </section>
+    </div>
+  </header>
+  <aside class="mdc-drawer mdc-drawer--modal mdc-top-app-bar--fixed-adjust mdc-drawer--static-pages" style="width:100%" data-mdc-auto-init="MDCDrawer">
+    <div class="mdc-drawer__content">
+      <nav class="mdc-list">
+        <a class="mdc-list-item mdc-list-item--activated" href="./login.html" aria-current="page" tabindex="0">
+          <span class="mdc-list-item__text">Login</span>
+        </a>
+        <li class="mdc-list-divider"></li>
+        <a class="mdc-list-item mdc-list-item--activated" href="./features.html" aria-current="page" tabindex="0">
+          <span class="mdc-list-item__text">Features</span>
+        </a>
+        <li class="mdc-list-divider"></li>
+        <a class="mdc-list-item" href="./pricing.html" tabindex="-1">
+          <span class="mdc-list-item__text">Pricing</span>
+        </a>
+        <a class="mdc-list-item" href="./faq.html" tabindex="-1">
+          <span class="mdc-list-item__text">FAQ</span>
+        </a>
+      </nav>
+    </div>
+  </aside>
+  <div class="mdc-drawer-scrim"></div>
+  <div class="mdc-top-app-bar--fixed-adjust page-content-section">
+    <div class="area">
+
+      <div class="mobile-logo--banner">
+        <div class="inline-flex">
+          <a class="mdc-top-app-bar__action-item mdc-icon-button icon-expand" aria-label="logo" href="./">
+            <img src="../../img/icon.png" id="header-logo">
+          </a>
+          <a class="mdc-typography--headline6  mdc-theme--primary" href="./">
+            <strong>GROWTH</strong>FILE
+          </a>
+        </div>
+      </div>
+      <div class="features-container">
+
+        <div class="faq-banner">
+          <p class="mdc-typography--headline4 mt-10 mb-10">FEATURES</p>
+        </div>
+      </div>
+    </div>
+    <section class="section">
+      <div class="max-width-1280">
+        <div class="mdc-layout-grid">
+          <div class="mdc-layout-grid__inner">
+            <div class="mdc-card mdc-card--outlined mdc-layout-grid__cell feature-card">
+              <div class="feature-content">
+                <i class="material-icons feature-icon">group_add
+                </i>
+                <div class="mdc-typography--headline5 mb-0 heading">Employee Management</div>
+                <p>Add all your employees, temporary staff, vendor staff and more. Unlimited users.
+                </p>
+              </div>
+            </div>
+            <div class="mdc-card mdc-card--outlined mdc-layout-grid__cell feature-card">
+              <div class="feature-content">
+                <i class="material-icons feature-icon">event_note
+                </i>
+                <div class="mdc-typography--headline5 mb-0 heading">Mobile Register</div>
+                <p> Logs GPS entries (Check-in time) of field staff when they make customer visits or begin duties.
+                </p>
+              </div>
+            </div>
+            <div class="mdc-card mdc-card--outlined mdc-layout-grid__cell feature-card">
+              <div class="feature-content">
+                <i class="material-icons feature-icon">add_a_photo
+                </i>
+                <div class="mdc-typography--headline5 mb-0 heading">Photo Proof</div>
+                <p> Field staff can upload photos of the work done as proof.
+                </p>
+              </div>
+            </div>
+    
+            <div class="mdc-card mdc-card--outlined mdc-layout-grid__cell feature-card">
+              <div class="feature-content">
+                <i class="material-icons feature-icon">grade
+                </i>
+                <div class="mdc-typography--headline5 mb-0 heading">Customer Ratings</div>
+                <p> Record visit outcomes with customer ratings.
+    
+                </p>
+              </div>
+            </div>
+    
+            <div class="mdc-card mdc-card--outlined mdc-layout-grid__cell feature-card">
+              <div class="feature-content">
+                <i class="material-icons feature-icon">email
+                </i>
+                <div class="mdc-typography--headline5 mb-0 heading">Daily Reports</div>
+                <p> Summary of the work done by your field staff (supported by GPS, photos and ratings) is automatically mailed to you as a daily Footprint report.
+    
+                </p>
+              </div>
+            </div>
+    
+            <div class="mdc-card mdc-card--outlined mdc-layout-grid__cell feature-card">
+              <div class="feature-content">
+                <i class="material-icons feature-icon">location_on
+                </i>
+                <div class="mdc-typography--headline5 mb-0 heading">Location Tagging</div>
+                <p>We set up location details for your branch offices and customers.
+    
+                </p>
+              </div>
+            </div>
+    
+          
+    
+            <div class="mdc-card mdc-card--outlined mdc-layout-grid__cell feature-card">
+              <div class="feature-content">
+                <i class="material-icons feature-icon">work
+                </i>
+                <div class="mdc-typography--headline5 mb-0 heading">Duty Management</div>
+                <p>Schedule duties and customer visits through OnDuty. Job completion tracking ensures work is done.
+    
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+  </div>
+    <footer></footer>
+  <script defer src="js/env-config.js"></script>
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WTG6JLT');</script>
+  <!-- End Google Tag Manager -->
+  <script src="./js/core.js"></script>
+  <script src="js/static.js"></script>
+
+</body>
+
+</html>
