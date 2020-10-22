@@ -5,7 +5,7 @@ const editIcon = document.getElementById('edit-employee')
 const init = (office, officeId) => {
 
     const user = JSON.parse(localStorage.getItem('selected_user'));
-    if (!user || user.employeeStatus === 'CANCELLED') {
+    if (!isUserActive(user)) {
         redirect('/admin/employees/');
         return;
     }
@@ -39,8 +39,10 @@ const init = (office, officeId) => {
                         value:user.phoneNumber
                     }
                 }}).then(()=>{
-                   showSnacksApiResponse('User removed')
-                   window.history.back();
+                   showSnacksApiResponse('User removed');
+                   setTimeout(()=>{
+                       window.history.back();
+                   },3000)
                 }).catch(err=>{
                     console.error(err)
                     showSnacksApiResponse('There was a problem changing employee status')

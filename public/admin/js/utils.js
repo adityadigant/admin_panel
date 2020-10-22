@@ -321,3 +321,15 @@ const updateUser = (phonenumber, attr) => {
         }
     })
 }
+
+
+
+const isUserActive = (user) => {
+    if(user.employeeStatus === 'CANCELLED') return;
+
+    return !(
+        !user.employeeId &&
+        !user.adminId &&
+        !user.subscriptions.length);
+
+}
