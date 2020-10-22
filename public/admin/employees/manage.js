@@ -81,33 +81,36 @@ const init = (office, officeId) => {
         const requestBody = activityBody.get();
 
 
-        http(requestParams.method, requestParams.url, requestBody).then(res => {
-            let message = 'New employee added';
-            if (requestParams.method === 'PUT') {
-                message = 'Employee updated';
-                putActivity(requestBody).then(function () {
+        getUser(firebase.auth().currentUser.phoneNumber).then(userRecord => {
+            const hasEmployeeSubscription = userRecord.subscriptions.filter(sub=>sub.name === "subscription" || sub.name === "employee").length == 2
+            let employeeSubscriptionPromise = Promise.resolve()
+            if (!hasEmployeeSubscription) {
+                employeeSubscriptionPromise = createSubscription(office, 'employee');
+            }
+            employeeSubscriptionPromise.then((subResponse) => {
+                    if(!subResponse)  return http(requestParams.method, requestParams.url, requestBody)
+                    setTimeout(()=>{
+                        return http(requestParams.method, requestParams.url, requestBody)
+                    },3000)
+                }).then(res => {
+                    let message = 'New employee added';
+                    if (requestParams.method === 'PUT') {
+                        message = 'Employee updated';
+                        putActivity(requestBody).then(function () {
+                            handleFormButtonSubmitSuccess(submitBtn, message);
+                        })
+                        return
+                    };
                     handleFormButtonSubmitSuccess(submitBtn, message);
                 })
-                return
-            };
-
-            handleFormButtonSubmitSuccess(submitBtn, message);
-        }).catch(err => {
-            if (err.message === `employee '${requestBody.attachment.Name.value}' already exists`) {
-                setHelperInvalid(new mdc.textField.MDCTextField(document.getElementById('name-field-mdc')), err.message);
-                handleFormButtonSubmit(submitBtn);
-                return
-            }
-            if (err.message === `No subscription found for the template: 'employee' with the office '${office}'`) {
-                createSubscription(office, 'employee').then(() => {
-                    form.dispatchEvent(new Event('submit', {
-                        cancelable: true,
-                        bubbles: true
-                    }))
+                .catch(err => {
+                    if (err.message === `employee '${requestBody.attachment.Name.value}' already exists`) {
+                        setHelperInvalid(new mdc.textField.MDCTextField(document.getElementById('name-field-mdc')), err.message);
+                        handleFormButtonSubmit(submitBtn);
+                        return
+                    }
+                    handleFormButtonSubmit(submitBtn, err.message)
                 })
-                return
-            }
-            handleFormButtonSubmit(submitBtn, err.message)
         })
     })
 }
@@ -174,6 +177,11 @@ const updateEmployeeFields = (officeId, activity) => {
 }
 
 
+/**
+ * 
+ * @param {string} phonenumber 
+ * @returns {object} e.target.result
+ */
 const getUser = (phonenumber) => {
     return new Promise(resolve => {
         window.database.transaction('users').objectStore('users').get(phonenumber).onsuccess = function (e) {
@@ -196,9 +204,9 @@ const statusChange = () => {
         submitBtn.classList.add('active')
         employeeStatusButton.classList.add('in-progress')
 
-        userStatusChange(employeeActivity).then(()=>{
-                handleFormButtonSubmitSuccess(submitBtn, 'User removed');
-        }).catch((err)=>{
+        userStatusChange(employeeActivity).then(() => {
+            handleFormButtonSubmitSuccess(submitBtn, 'User removed');
+        }).catch((err) => {
             showSnacksApiResponse('There was a problem changing employee status')
             submitBtn.classList.remove('active')
         })
