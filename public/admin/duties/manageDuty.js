@@ -146,7 +146,7 @@ const init = (office, officeId) => {
         ev.preventDefault();
 
 
-        ev.submitter.classList.add('active')
+        submitBtn.classList.add('active')
 
         const activityBody = createActivityBody();
         activityBody.setOffice(office)
@@ -186,13 +186,13 @@ const init = (office, officeId) => {
             };
             if(requestParams.method === 'PUT') {
                 putActivity(requestBody).then(res=>{
-                    handleFormButtonSubmitSuccess(ev.submitter,message);
+                    handleFormButtonSubmitSuccess(submitBtn,message);
                 })
                 return
             }
-            handleFormButtonSubmitSuccess(ev.submitter,message);
+            handleFormButtonSubmitSuccess(submitBtn,message);
         }).catch(err => {
-            handleFormButtonSubmit(ev.submitter, err.message)
+            handleFormButtonSubmit(submitBtn, err.message)
         });
     })
 }
