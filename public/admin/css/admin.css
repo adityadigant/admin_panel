@@ -82,16 +82,6 @@
     float: right;
 }
 
-@media(min-width:839px) {
-    .mdc-fab--action {
-        position: relative !important;
-        float: right;
-    }
-
-    .form-actionable {
-        padding-top: 20px;
-    }
-}
 
 .mdc-fab--action {
     background-color: var(--mdc-theme-primary);

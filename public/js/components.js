@@ -1,12 +1,4 @@
-const phoneFieldInit = (numberField, dropEl) => {
-  const input = numberField.input_;
-  return intlTelInput(input, {
-    initialCountry: "IN",
-    formatOnDisplay: true,
-    separateDialCode: true,
-    dropdownContainer: dropEl || document.getElementById('country-dom')
-  });
-};
+
 
 function textField(attr) {
   return `<div class="mdc-text-field mdc-text-field--outlined ${attr.label ? '' :'mdc-text-field--no-label'} full-width ${attr.leadingIcon ? 'mdc-text-field--with-leading-icon' :''} ${attr.trailingIcon ? 'mdc-text-field--with-trailing-icon' :''} ${attr.disabled ? 'mdc-text-field--disabled' :''}" id='${attr.id}'>
