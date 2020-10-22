@@ -1,6 +1,7 @@
 function AppKeys() {
   this.mode = 'production';
 }
+
 AppKeys.prototype.getMode = function () {
   return this.mode;
 };
@@ -8,7 +9,9 @@ AppKeys.prototype.getMode = function () {
 AppKeys.prototype.getMapKey = function () {
   if (this.mode === 'dev') {
     return "AIzaSyB2SuCoyi9ngRIy6xZRYuzxoQJDtOheiUM";
-  };
+  }
+
+  ;
   return "AIzaSyBl6SlzDCW51UEYudI8kFwG41KePOjW7xI";
 };
 
@@ -21,8 +24,9 @@ AppKeys.prototype.getKeys = function () {
       projectId: 'growthfile-207204',
       storageBucket: 'growthfile-207204.appspot.com',
       messagingSenderId: '701025551237'
-    }
+    };
   }
+
   return {
     apiKey: "AIzaSyB2SuCoyi9ngRIy6xZRYuzxoQJDtOheiUM",
     authDomain: "growthfilev2-0.firebaseapp.com",
@@ -50,12 +54,14 @@ AppKeys.prototype.getBaseUrl = function () {
 AppKeys.prototype.dynamicLinkUriPrefix = function () {
   return this.mode === 'production' ? 'https://growthfile.page.link' : 'https://growthfileanalytics.page.link';
 };
+
 AppKeys.prototype.cashFreeId = function () {
-  return this.mode === 'production' ? '2271418356589678f50ecb73241722' : '6809148a6dceb20019efc6fe9086'
-}
+  return this.mode === 'production' ? '2271418356589678f50ecb73241722' : '6809148a6dceb20019efc6fe9086';
+};
+
 AppKeys.prototype.cashFreeWebhook = function () {
-  return this.mode === 'production' ? 'https://us-central1-growthfile-207204.cloudfunctions.net/api/webhook/cashfreeGateway' : `${this.getBaseUrl()}/api/webhook/cashfreeGateway`
-}
+  return this.mode === 'production' ? 'https://us-central1-growthfile-207204.cloudfunctions.net/api/webhook/cashfreeGateway' : "".concat(this.getBaseUrl(), "/api/webhook/cashfreeGateway");
+};
 
 AppKeys.prototype.getIframeDomain = function () {
   return 'https://' + this.getKeys().authDomain;
