@@ -93,7 +93,7 @@ container.children[0].addEventListener('click', (ev) => {
     }
 })
 container.children[1].addEventListener('click', (ev) => {
-    redirect('/admin/employees/manage')
+    redirect('/admin/employees/addUser')
 })
 container.children[2].addEventListener('click', (ev) => {
     toggleFabList(ev.currentTarget)
