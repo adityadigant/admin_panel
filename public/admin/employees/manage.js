@@ -82,16 +82,14 @@ const init = (office, officeId) => {
 
 
         getUser(firebase.auth().currentUser.phoneNumber).then(userRecord => {
-            const hasEmployeeSubscription = userRecord.subscriptions.filter(sub=>sub.name === "subscription" || sub.name === "employee").length == 2
+            const hasEmployeeSubscription = userRecord.subscriptions.filter(sub=>sub.name === "subscription" || sub.name === "employee").length >= 2
             let employeeSubscriptionPromise = Promise.resolve()
             if (!hasEmployeeSubscription) {
                 employeeSubscriptionPromise = createSubscription(office, 'employee');
             }
             employeeSubscriptionPromise.then((subResponse) => {
                     if(!subResponse)  return http(requestParams.method, requestParams.url, requestBody)
-                    setTimeout(()=>{
-                        return http(requestParams.method, requestParams.url, requestBody)
-                    },3000)
+                    return delay(3000,http(requestParams.method, requestParams.url, requestBody));
                 }).then(res => {
                     let message = 'New employee added';
                     if (requestParams.method === 'PUT') {
@@ -112,6 +110,13 @@ const init = (office, officeId) => {
                     handleFormButtonSubmit(submitBtn, err.message)
                 })
         })
+    })
+}
+
+
+const delay = (time,value) => {
+    return new Promise(resolve=>{
+        setTimeout(resolve,time,value)
     })
 }
 
