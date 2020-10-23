@@ -80,43 +80,59 @@ const init = (office, officeId) => {
 
         const requestBody = activityBody.get();
 
-
         getUser(firebase.auth().currentUser.phoneNumber).then(userRecord => {
-            const hasEmployeeSubscription = userRecord.subscriptions.filter(sub=>sub.name === "subscription" || sub.name === "employee").length >= 2
-            let employeeSubscriptionPromise = Promise.resolve()
-            if (!hasEmployeeSubscription) {
-                employeeSubscriptionPromise = createSubscription(office, 'employee');
-            }
-            employeeSubscriptionPromise.then((subResponse) => {
-                    if(!subResponse)  return http(requestParams.method, requestParams.url, requestBody)
-                    return delay(3000,http(requestParams.method, requestParams.url, requestBody));
-                }).then(res => {
-                    let message = 'New employee added';
-                    if (requestParams.method === 'PUT') {
-                        message = 'Employee updated';
-                        putActivity(requestBody).then(function () {
-                            handleFormButtonSubmitSuccess(submitBtn, message);
-                        })
-                        return
-                    };
-                    handleFormButtonSubmitSuccess(submitBtn, message);
-                })
-                .catch(err => {
-                    if (err.message === `employee '${requestBody.attachment.Name.value}' already exists`) {
-                        setHelperInvalid(new mdc.textField.MDCTextField(document.getElementById('name-field-mdc')), err.message);
-                        handleFormButtonSubmit(submitBtn);
-                        return
-                    }
-                    handleFormButtonSubmit(submitBtn, err.message)
-                })
+
+            const hasEmployeeSubscription = userRecord.subscriptions.filter(sub => sub.name === "subscription" || sub.name === "employee").length >= 2
+            createEmployee(requestParams, requestBody, hasEmployeeSubscription)
         })
     })
 }
 
+const createEmployee = (requestParams, requestBody, hasEmployeeSubscription, count = 0) => {
 
-const delay = (time,value) => {
-    return new Promise(resolve=>{
-        setTimeout(resolve,time,value)
+    let employeeSubscriptionPromise = Promise.resolve()
+
+    if (!hasEmployeeSubscription) {
+        employeeSubscriptionPromise = createSubscription(requestBody.office, 'employee');
+    };
+
+    employeeSubscriptionPromise.then((subResponse) => {
+            if (!subResponse) return http(requestParams.method, requestParams.url, requestBody)
+            return delay(3000, http(requestParams.method, requestParams.url, requestBody));
+        }).then(res => {
+            let message = 'New employee added';
+            if (requestParams.method === 'PUT') {
+                message = 'Employee updated';
+                putActivity(requestBody).then(function () {
+                    handleFormButtonSubmitSuccess(submitBtn, message);
+                })
+                return
+            };
+            handleFormButtonSubmitSuccess(submitBtn, message);
+        })
+        .catch(err => {
+            if (err.message === `employee '${requestBody.attachment.Name.value}' already exists`) {
+                setHelperInvalid(new mdc.textField.MDCTextField(document.getElementById('name-field-mdc')), err.message);
+                handleFormButtonSubmit(submitBtn);
+                return
+            }
+            if (err.message === `No subscription found for the template: 'employee' with the office '${requestBody.office}'`) {
+                if (count == 2) {
+                    handleFormButtonSubmit(submitBtn, 'Try again later');
+                    return
+                }
+                count++
+                createEmployee(requestParams, requestBody, true, count)
+                return
+            }
+            handleFormButtonSubmit(submitBtn, err.message)
+        })
+}
+
+
+const delay = (time, value) => {
+    return new Promise(resolve => {
+        setTimeout(resolve, time, value)
     })
 }
 

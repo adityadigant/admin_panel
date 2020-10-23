@@ -75,41 +75,62 @@ var init = function init(office, officeId) {
     getUser(firebase.auth().currentUser.phoneNumber).then(function (userRecord) {
       var hasEmployeeSubscription = userRecord.subscriptions.filter(function (sub) {
         return sub.name === "subscription" || sub.name === "employee";
-      }).length == 2;
-      var employeeSubscriptionPromise = Promise.resolve();
+      }).length >= 2;
+      createEmployee(requestParams, requestBody, hasEmployeeSubscription);
+    });
+  });
+};
 
-      if (!hasEmployeeSubscription) {
-        employeeSubscriptionPromise = createSubscription(office, 'employee');
+var createEmployee = function createEmployee(requestParams, requestBody, hasEmployeeSubscription) {
+  var count = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+  var employeeSubscriptionPromise = Promise.resolve();
+
+  if (!hasEmployeeSubscription) {
+    employeeSubscriptionPromise = createSubscription(requestBody.office, 'employee');
+  }
+
+  ;
+  employeeSubscriptionPromise.then(function (subResponse) {
+    if (!subResponse) return http(requestParams.method, requestParams.url, requestBody);
+    return delay(3000, http(requestParams.method, requestParams.url, requestBody));
+  }).then(function (res) {
+    var message = 'New employee added';
+
+    if (requestParams.method === 'PUT') {
+      message = 'Employee updated';
+      putActivity(requestBody).then(function () {
+        handleFormButtonSubmitSuccess(submitBtn, message);
+      });
+      return;
+    }
+
+    ;
+    handleFormButtonSubmitSuccess(submitBtn, message);
+  }).catch(function (err) {
+    if (err.message === "employee '".concat(requestBody.attachment.Name.value, "' already exists")) {
+      setHelperInvalid(new mdc.textField.MDCTextField(document.getElementById('name-field-mdc')), err.message);
+      handleFormButtonSubmit(submitBtn);
+      return;
+    }
+
+    if (err.message === "No subscription found for the template: 'employee' with the office '".concat(requestBody.office, "'")) {
+      if (count == 2) {
+        handleFormButtonSubmit(submitBtn, 'Try again later');
+        return;
       }
 
-      employeeSubscriptionPromise.then(function (subResponse) {
-        if (!subResponse) return http(requestParams.method, requestParams.url, requestBody);
-        setTimeout(function () {
-          return http(requestParams.method, requestParams.url, requestBody);
-        }, 3000);
-      }).then(function (res) {
-        var message = 'New employee added';
+      count++;
+      createEmployee(requestParams, requestBody, true, count);
+      return;
+    }
 
-        if (requestParams.method === 'PUT') {
-          message = 'Employee updated';
-          putActivity(requestBody).then(function () {
-            handleFormButtonSubmitSuccess(submitBtn, message);
-          });
-          return;
-        }
+    handleFormButtonSubmit(submitBtn, err.message);
+  });
+};
 
-        ;
-        handleFormButtonSubmitSuccess(submitBtn, message);
-      }).catch(function (err) {
-        if (err.message === "employee '".concat(requestBody.attachment.Name.value, "' already exists")) {
-          setHelperInvalid(new mdc.textField.MDCTextField(document.getElementById('name-field-mdc')), err.message);
-          handleFormButtonSubmit(submitBtn);
-          return;
-        }
-
-        handleFormButtonSubmit(submitBtn, err.message);
-      });
-    });
+var delay = function delay(time, value) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, time, value);
   });
 };
 
