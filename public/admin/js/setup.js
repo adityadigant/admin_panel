@@ -12,6 +12,7 @@ window.DB_VERSION = 2;
 
 window.database;
 let drawer;
+let hasMultipleOffice = false;
 window.addEventListener('load', () => {
     firebase.auth().onAuthStateChanged(function (user) {
         // if user is logged out redirect to login page
@@ -31,10 +32,11 @@ window.addEventListener('load', () => {
             
             const claims = idTokenResult.claims;
     
-            // if (claims.support) return redirect('/support');
+            if (claims.support) return redirect('/support');
             if (claims.admin && claims.admin.length) {
                 // if there are multiple offices fill the drawer header with office list
                 if (claims.admin.length > 1) {
+                    hasMultipleOffice = true
                     document.querySelector('.mdc-drawer__header').classList.remove('hidden')
                     claims.admin.forEach(office => {
                         document.getElementById('office-list').appendChild(officeList(office))
@@ -258,8 +260,10 @@ const startApplication = (office) => {
             document.getElementById('choose-plan-button').href = `../join.html#payment?office=${encodeURIComponent(office)}`
             
             const schedule = officeActivity.schedule;
-            const isUserFirstContact = officeActivity.attachment['First Contact'].value === firebase.auth().currentUser.phoneNumber
-            dialog.scrimClickAction = "";
+            const isUserFirstContact = officeActivity.attachment['First Contact'].value === firebase.auth().currentUser.phoneNumber;
+            if(!hasMultipleOffice) {
+                dialog.scrimClickAction = "";
+            }
 
             if (!officeHasMembership(schedule)) {
                 dialogTitle.textContent = 'You are just 1 step away from tracking your employees successfully.';
