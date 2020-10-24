@@ -735,6 +735,7 @@ function officeFlow(category = onboarding_data_save.get().category) {
                 if (res.officeId) {
                     officeData.officeId = res.officeId;
                 }
+                officeData.name = res.office;
                 handleOfficeRequestSuccess(officeData);
                 if (window.fbq) {
                     fbq('trackCustom', 'Office Created')
