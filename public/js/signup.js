@@ -693,8 +693,7 @@ function officeFlow(category = onboarding_data_save.get().category) {
 
     const nxtButton = nextButton();
     nxtButton.element.addEventListener('click', () => {
-        const officeName = removeSpecialCharsInside(inputFields.name.value);
-        if (!officeName) {
+        if (!inputFields.name.value) {
             setHelperInvalid(inputFields.name, 'Enter your company name');
             return;
         };
@@ -714,7 +713,7 @@ function officeFlow(category = onboarding_data_save.get().category) {
                 return
             }
             const officeData = {
-                name: officeName,
+                name: inputFields.name.value,
                 registeredOfficeAddress: inputFields.address.value,
                 pincode: inputFields.pincode.value,
                 description: inputFields.description.value,

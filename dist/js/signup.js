@@ -686,9 +686,7 @@ function officeFlow() {
   });
   var nxtButton = nextButton();
   nxtButton.element.addEventListener('click', function () {
-    var officeName = removeSpecialCharsInside(inputFields.name.value);
-
-    if (!officeName) {
+    if (!inputFields.name.value) {
       setHelperInvalid(inputFields.name, 'Enter your company name');
       return;
     }
@@ -714,7 +712,7 @@ function officeFlow() {
       }
 
       var officeData = {
-        name: officeName,
+        name: inputFields.name.value,
         registeredOfficeAddress: inputFields.address.value,
         pincode: inputFields.pincode.value,
         description: inputFields.description.value,
