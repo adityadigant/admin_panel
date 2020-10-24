@@ -693,7 +693,8 @@ function officeFlow(category = onboarding_data_save.get().category) {
 
     const nxtButton = nextButton();
     nxtButton.element.addEventListener('click', () => {
-        if (!inputFields.name.value) {
+        const officeName = removeSpecialCharsInside(inputFields.name.value);
+        if (!officeName) {
             setHelperInvalid(inputFields.name, 'Enter your company name');
             return;
         };
@@ -713,7 +714,7 @@ function officeFlow(category = onboarding_data_save.get().category) {
                 return
             }
             const officeData = {
-                name: inputFields.name.value,
+                name: officeName,
                 registeredOfficeAddress: inputFields.address.value,
                 pincode: inputFields.pincode.value,
                 description: inputFields.description.value,
@@ -767,7 +768,7 @@ function officeFlow(category = onboarding_data_save.get().category) {
                     stack: error.stack
                 });
             })
-          
+
         })
     })
 
@@ -775,6 +776,13 @@ function officeFlow(category = onboarding_data_save.get().category) {
     journeyContainer.appendChild(frag);
     actionsContainer.appendChild(nxtButton.element);
     document.body.scrollTop = 0;
+};
+
+const removeSpecialCharsInside = str => {
+    const reverseText = str.split('').reverse().join('');
+    const firstIndex = new RegExp(/([a-zA-Z0-9])/, 'ig').exec(str).index;
+    const lastIndex = new RegExp(/([a-zA-Z0-9])/, 'ig').exec(reverseText).index;
+    return str.substring(firstIndex, str.length - lastIndex).trim();
 };
 
 const sendOfficeRequest = (officeRequest, retry) => {
@@ -2626,4 +2634,3 @@ const lazyLoadScript = (path) => {
         document.body.appendChild(script);
     })
 }
-
