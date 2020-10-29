@@ -73,12 +73,21 @@ var init = function init(office, officeId) {
     activityBody.setAttachment('First Supervisor', supervisorInput.dataset.number, 'phoneNumber');
     var requestBody = activityBody.get();
     getUser(firebase.auth().currentUser.phoneNumber).then(function (userRecord) {
-      var hasEmployeeSubscription = userRecord.subscriptions.filter(function (sub) {
-        return sub.name === "subscription" || sub.name === "employee";
-      }).length >= 2;
-      createEmployee(requestParams, requestBody, hasEmployeeSubscription);
+      createEmployee(requestParams, requestBody, hasEmployeeSubscription(userRecord));
     });
   });
+};
+
+var hasEmployeeSubscription = function hasEmployeeSubscription(userRecord) {
+  if (userRecord.subscriptions.some(function (sub) {
+    return sub.name === 'employee';
+  })) return true;
+  if (userRecord.subscriptions.filter(function (sub) {
+    return sub.name === "subscription" || sub.name === "employee";
+  }).length >= 2) return true;
+  if (userRecord.subscriptions.some(function (sub) {
+    return sub.name === 'subscription';
+  })) return false;
 };
 
 var createEmployee = function createEmployee(requestParams, requestBody, hasEmployeeSubscription) {

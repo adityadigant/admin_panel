@@ -81,11 +81,17 @@ const init = (office, officeId) => {
         const requestBody = activityBody.get();
 
         getUser(firebase.auth().currentUser.phoneNumber).then(userRecord => {
-
-            const hasEmployeeSubscription = userRecord.subscriptions.filter(sub => sub.name === "subscription" || sub.name === "employee").length >= 2
-            createEmployee(requestParams, requestBody, hasEmployeeSubscription)
+          
+            createEmployee(requestParams, requestBody, hasEmployeeSubscription(userRecord))
         })
     })
+}
+
+const hasEmployeeSubscription = (userRecord) => {
+    if(userRecord.subscriptions.some(sub=>sub.name==='employee')) return true;
+    if(userRecord.subscriptions.filter(sub => sub.name === "subscription" || sub.name === "employee").length >= 2) return true;
+    if(userRecord.subscriptions.some(sub=>sub.name ==='subscription')) return false
+    
 }
 
 const createEmployee = (requestParams, requestBody, hasEmployeeSubscription, count = 0) => {

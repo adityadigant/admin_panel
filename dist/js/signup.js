@@ -1903,7 +1903,7 @@ var handleOfficeDescription = function handleOfficeDescription(category) {
   new mdc.textField.MDCTextField(description.parentNode.parentNode);
   if (!nameEl.value) return;
   if (description.dataset.typed === "yes") return;
-  var string = "".concat(nameEl.value, " is ").concat(prefixForVowel(category), " ").concat(category, " company ").concat(address.value ? ", based out of  ".concat(address.value) : '', " ").concat(year.value > 0 ? ". They have been in business since ".concat(year.value) : '');
+  var string = "".concat(nameEl.value, " is ").concat(prefixForVowel(category), " ").concat(category, " company").concat(address.value ? ", based out of ".concat(address.value) : '').concat(year.value > 0 ? ". They have been in business since ".concat(year.value) : '');
   description.value = string;
 };
 /**
