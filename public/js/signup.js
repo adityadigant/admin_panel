@@ -2001,7 +2001,7 @@ const handleOfficeDescription = (category) => {
     new mdc.textField.MDCTextField(description.parentNode.parentNode);
     if (!nameEl.value) return;
     if (description.dataset.typed === "yes") return;
-    let string = `${nameEl.value} is ${prefixForVowel(category)} ${category} company ${address.value ? `, based out of  ${address.value}`:''} ${year.value > 0 ? `. They have been in business since ${year.value}`:''}`;
+    let string = `${nameEl.value} is ${prefixForVowel(category)} ${category} company${address.value?`, based out of ${address.value}`:''}${year.value >0?`. They have been in business since ${year.value}`:''}`;
     description.value = string;
 }
 
