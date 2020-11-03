@@ -29,6 +29,7 @@ var COL_WIDTH = 9;
 var ROW_HEIGHT = 20;
 
 var init = function init(office, officeId) {
+  downloadReport("".concat(appKeys.getBaseUrl(), "/api/office/").concat(officeId, "/report?name=monthlyAttendance&month=8&year=2020"));
   reportCards.forEach(function (card) {
     var btn = card.querySelector('.download-report-btn');
     var select = document.getElementById('month-list');
@@ -187,6 +188,34 @@ var init = function init(office, officeId) {
         });
       });
     });
+  });
+};
+
+var downloadReport = function downloadReport(url) {
+  firebase.auth().currentUser.getIdToken().then(function (token) {
+    fetch(url, {
+      method: 'GET',
+      headers: new Headers({
+        "Authorization": "Bearer ".concat(token)
+      })
+    }).then(function (response) {
+      console.log(response.status);
+      return response.blob();
+    }).then(function (blob) {
+      console.log(blob);
+      window.open(window.URL.createObjectURL(blob));
+      return;
+      var file = window.URL.createObjectURL(blob); // window.location.assign(file);
+      // return
+
+      var a = document.createElement('a');
+      a.href = file;
+      a.download = "filename.xlsx";
+      document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+
+      a.click();
+      a.remove();
+    }).catch(console.error);
   });
 };
 

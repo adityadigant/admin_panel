@@ -27,6 +27,8 @@ const CELL_WIDTH = 8.43;
 const COL_WIDTH = 9;
 const ROW_HEIGHT = 20;
 const init = (office, officeId) => {
+    
+    downloadReport(`${appKeys.getBaseUrl()}/api/office/${officeId}/report?name=location&month=9&year=2020&day=`)
 
     reportCards.forEach(card => {
         const btn = card.querySelector('.download-report-btn')
@@ -191,6 +193,37 @@ const init = (office, officeId) => {
                 })
             })
         })
+    })
+
+}
+
+const downloadReport = (url) => {
+    firebase.auth().currentUser.getIdToken().then(token=>{
+        fetch(url,{
+            method:'GET',
+            headers: new Headers({
+                "Authorization":`Bearer ${token}`,
+              
+            })
+        }).then(response=>{
+            console.log(response.status)
+            return response.blob()
+        }).then(blob=>{
+
+            console.log(blob)
+            window.open(window.URL.createObjectURL(blob))
+            return
+            const file = window.URL.createObjectURL(blob);
+
+            // window.location.assign(file);
+            // return
+            const a = document.createElement('a');
+            a.href = file;
+            a.download = "filename.xlsx";
+            document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+            a.click();    
+            a.remove();
+        }).catch(console.error)
     })
 }
 
