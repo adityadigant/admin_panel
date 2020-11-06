@@ -180,12 +180,11 @@
 
             <div class="mdc-layout-grid pl-0 pr-0">
                 <div class="mdc-layout-grid__inner">
-                    <div class="mdc-layout-grid__cell">
-                        <div class="mdc-card mdc-card--outlined report-card">
+                        <div class="mdc-card mdc-card--outlined report-card mdc-layout-grid__cell" id="attendance-card">
                             <h3 class="mdc-typogrgraphy--headline6 mt-0 mb-0">Attendance summary report</h3>
                             <p>Daily attendance report of employees</p>
                             <div class="date-range">
-                                <div class="mdc-select mdc-select--outlined" id="month-list">
+                                <div class="mdc-select mdc-select--outlined" data-mdc-auto-init="MDCSelect" id="attendance-month-select">
                                     <div class="mdc-select__anchor" aria-labelledby="outlined-select-label">
                                         <span id="demo-selected-text" class="mdc-select__selected-text"></span>
                                         <span class="mdc-select__dropdown-icon">
@@ -209,53 +208,104 @@
 
                                     <!-- Other elements from the select remain. -->
                                     <div class="mdc-select__menu mdc-menu mdc-menu-surface" role="listbox">
-                                        <ul class="mdc-list">
+                                        <ul class="mdc-list month-list">
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mdc-select mdc-select--outlined" data-mdc-auto-init="MDCSelect" id="attendance-year-select">
+                                    <div class="mdc-select__anchor" aria-labelledby="outlined-select-label">
+                                        <span id="demo-selected-text" class="mdc-select__selected-text"></span>
+                                        <span class="mdc-select__dropdown-icon">
+                                            <svg class="mdc-select__dropdown-icon-graphic" viewBox="7 10 10 5">
+                                                <polygon class="mdc-select__dropdown-icon-inactive" stroke="none"
+                                                    fill-rule="evenodd" points="7 10 12 15 17 10">
+                                                </polygon>
+                                                <polygon class="mdc-select__dropdown-icon-active" stroke="none"
+                                                    fill-rule="evenodd" points="7 15 12 10 17 15">
+                                                </polygon>
+                                            </svg>
+                                        </span>
+                                        <span class="mdc-notched-outline">
+                                            <span class="mdc-notched-outline__leading"></span>
+                                            <span class="mdc-notched-outline__notch">
+                                                <span id="outlined-select-label" class="mdc-floating-label">Year</span>
+                                            </span>
+                                            <span class="mdc-notched-outline__trailing"></span>
+                                        </span>
+                                    </div>
+
+                                    <!-- Other elements from the select remain. -->
+                                    <div class="mdc-select__menu mdc-menu mdc-menu-surface" role="listbox">
+                                        <ul class="mdc-list year-list">
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                             <button class="mdc-button mdc-button--raised download-report-btn mt-10"
-                                data-report="mtd-report">
+                                data-name="monthlyAttendance" data-mdc-auto-init="MDCRipple" id="download-attendance-report">
                                 <div class="mdc-button__ripple"></div>
                                 <i class="material-icons mdc-button__icon" aria-hidden="true">get_app</i>
                                 <div class="straight-loader"></div>
                                 <span class="mdc-button__label">Download</span>
                             </button>
-                            <p id="report-error" class="mb-0 mdc-theme--error mdc-typography--subtitle1 text-center">
+                            <p class="report-error mdc-theme--error" class="mb-0 mdc-theme--error mdc-typography--subtitle1 text-center">
                             </p>
                         </div>
-                    </div>
+                        <div class="mdc-card mdc-card--outlined report-card mdc-layout-grid__cell" id="activity-card">
+                            <h3 class="mdc-typogrgraphy--headline6 mt-0 mb-0">Employee activity report</h3>
+                            <p>Day wise activity report of employees</p>
+                            <label class="mdc-text-field mdc-text-field--outlined" data-mdc-auto-init="MDCTextField">
+                                <span class="mdc-notched-outline">
+                                  <span class="mdc-notched-outline__leading"></span>
+                                  <span class="mdc-notched-outline__notch">
+                                    <span class="mdc-floating-label" id="employee-activity-date">Select date</span>
+                                  </span>
+                                  <span class="mdc-notched-outline__trailing"></span>
+                                </span>
+                                <input type="date" class="mdc-text-field__input" aria-labelledby="employee-activity-date" id="employee-activity-date-input">
+                            </label>
+
+                            <button class="mdc-button mdc-button--raised download-report-btn mt-10"
+                                data-name="employeeActivity"  data-mdc-auto-init="MDCRipple" id="download-activity-report">
+                                <div class="mdc-button__ripple"></div>
+                                <i class="material-icons mdc-button__icon" aria-hidden="true">get_app</i>
+                                <div class="straight-loader"></div>
+                                <span class="mdc-button__label">Download</span>
+                            </button>
+                            <p class="report-error mdc-theme--error" class="mb-0 mdc-theme--error mdc-typography--subtitle1 text-center">
+                            </p>
+                        </div>
+
+                        <div class="mdc-card mdc-card--outlined report-card mdc-layout-grid__cell" id="location-card">
+                            <h3 class="mdc-typogrgraphy--headline6 mt-0 mb-0">Location report</h3>
+                            <p>Day wise location report</p>
+                            <label class="mdc-text-field mdc-text-field--outlined" data-mdc-auto-init="MDCTextField">
+                                <span class="mdc-notched-outline">
+                                  <span class="mdc-notched-outline__leading"></span>
+                                  <span class="mdc-notched-outline__notch">
+                                    <span class="mdc-floating-label" id="location-report-date">Select date</span>
+                                  </span>
+                                  <span class="mdc-notched-outline__trailing"></span>
+                                </span>
+                                <input type="date" class="mdc-text-field__input" aria-labelledby="location-report-date" id="location-date-input">
+                            </label>
+                            
+                            <button class="mdc-button mdc-button--raised download-report-btn mt-10"
+                                data-name="location" data-mdc-auto-init="MDCRipple" id="download-location-report">
+                                <div class="mdc-button__ripple"></div>
+                                <i class="material-icons mdc-button__icon" aria-hidden="true">get_app</i>
+                                <div class="straight-loader"></div>
+                                <span class="mdc-button__label">Download</span>
+                            </button>
+                            <p class="report-error mdc-theme--error" class="mb-0 mdc-theme--error mdc-typography--subtitle1 text-center">
+                            </p>
+                        </div>
 
                 </div>
             </div>
 
             <div id='snackbar-container'></div>
         </main>
-    </div>
-    <div class="mdc-dialog" id="payment-dialog">
-        <div class="mdc-dialog__container">
-            <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
-                aria-describedby="my-dialog-content">
-                <div class="mdc-dialog__title mdc-typography--headline5 bold text-center mdc-theme--primary"
-                    id="my-dialog-title">
-                    Your trial period is over.
-                </div>
-                <div class="mdc-dialog__content" id="my-dialog-content">
-                    <div id="payment-dialog--body" class="mdc-typography--headline6 text-center">
-                        Choose your plan to continue
-                    </div>
-                    <div class="mt-20 text-center">
-                        <a type="button" class="mdc-button mdc-dialog__button mdc-button--raised"
-                            data-mdc-dialog-action="close" href="../join.html#payment">
-                            <div class="mdc-button__ripple"></div>
-                            <span class="mdc-button__label">choose plan</span>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <div class="mdc-dialog__scrim"></div>
     </div>
     <div class="mdc-dialog" id="payment-dialog">
         <div class="mdc-dialog__container">
@@ -282,9 +332,10 @@
         </div>
         <div class="mdc-dialog__scrim"></div>
     </div>
+   
     <script defer src="../js/env-config.js"></script>
     <!-- Google Tag Manager -->
-    <script>
+    <!-- <script>
         (function (w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
@@ -299,7 +350,7 @@
                 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-WTG6JLT');
-    </script>
+    </script> -->
     <!-- End Google Tag Manager -->
 
     <script src="../js/core.js"></script>
@@ -309,9 +360,7 @@
 
     <script src="./js/moment.min.js"></script>
     <script src="./js/report.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.1.1/exceljs.min.js"
-        integrity="sha512-zhDD6mpjQmjTOqcC2jd9iRgxmAlk/pmCCUPjKA9XWbcmvk7o0Jr8/9Dr0qQ5V54DPQJcRgCvlgFrtWMxgRjSOQ=="
-        crossorigin="anonymous"></script>
+   
 </body>
 
 </html>

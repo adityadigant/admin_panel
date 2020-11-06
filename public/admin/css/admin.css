@@ -739,6 +739,17 @@ form textarea {
     min-width: 300px;
     max-width: 350px;
 }
+.report-card .date-range {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+}
+.report-card .date-range .mdc-select {
+    min-width: fit-content;
+}
+.report-card .date-range .mdc-select:nth-child(1) {
+    margin-right: 10px;
+}
 
 .report-card .mdc-select {
     width: 100%;
