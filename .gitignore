@@ -73,3 +73,7 @@ env.js
 
 #robots.txt
 robots.txt
+
+#wrangler 
+wrangler.toml
+workers-site/
