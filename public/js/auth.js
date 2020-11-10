@@ -1,13 +1,20 @@
 window.addEventListener('load', () => {
-    firebase.auth().onAuthStateChanged(function (user) {
-
-        if (user) {
-            addLogoutBtn();
-            // flush stored errors that were logged before auth
-            flushStoredErrors()
+    const searchParams = new URLSearchParams(window.location.search);
+    const box = document.getElementById('home-login')
+    box.classList.remove('hidden')
+    if (!searchParams.has('signup')) {
+        initializeLogIn(box)
+        return
+    }
+    const authListener = firebase.auth().onAuthStateChanged(function (user) {
+        if (!user) {
+            authListener()
+            return initAuthBox();
         }
-
-        initAuthBox(user);
+        flushStoredErrors();
+        sendAcqusition().then(handleLoggedIn).catch(err => {
+            redirect('/admin/index.html')
+        })
     });
 })
 
@@ -16,39 +23,26 @@ const otpContainer = document.querySelector('.otp-container');
 
 /**
  * initialize the auth box.
- * if user is logged out , then show the phonenumber field 
- * for user to perform auth , else remove the phonenumber field. 
  * @param {object} user // firebase auth object
  */
-const initAuthBox = (user) => {
+const initAuthBox = () => {
     const getStartedBtn = document.getElementById('get-started');
+    document.getElementById("login--login-box").addEventListener("click",()=>{
+        history.pushState('signup',null,window.location.pathname)
+        // redirect(`${window.location.pathname}index.html?signup=1`)
+        window.location.reload();
+    })
     const phoneNumberField = new mdc.textField.MDCTextField(document.getElementById('phone-number'));
     const iti = phoneFieldInit(phoneNumberField);
-
-    // firebase.auth().settings.appVerificationDisabledForTesting = true;
-
-    if (!user) {
-        document.getElementById('auth-section').classList.remove('hidden');
-        //  for testing disable recaptcha
-        // firebase.auth().settings.appVerificationDisabledForTesting = true
-        if (!window.recaptchaVerifier) {
-            window.recaptchaVerifier = handleRecaptcha(getStartedBtn.id);
-        }
-    } else {
-        document.getElementById('auth-secondary--text').textContent = 'Manage your business'
-        isElevatedUser().then(elevated => {
-            if (elevated && getStartedBtn) {
-                getStartedBtn.textContent = 'MANAGE NOW'
-                return
-            }
-            document.getElementById('auth-section').classList.add('hidden');
-        })
-        //user is logged in;
+    firebase.auth().settings.appVerificationDisabledForTesting = true;
+    document.getElementById('auth-section').classList.remove('hidden');
+    //  for testing disable recaptcha
+    // firebase.auth().settings.appVerificationDisabledForTesting = true
+    if (!window.recaptchaVerifier) {
+        window.recaptchaVerifier = handleRecaptcha(getStartedBtn.id);
     }
-
     // initialize dialog
     const dialog = new mdc.dialog.MDCDialog(document.getElementById('otp-dialog'));
-
     //submit otp
     const submitOtpBtn = document.getElementById('submit-otp');
     submitOtpBtn.addEventListener('click', function () {
@@ -93,10 +87,7 @@ const initAuthBox = (user) => {
     });
 
     getStartedBtn.addEventListener('click', (ev) => {
-        if (user) {
-            handleAuthRedirect();
-            return;
-        }
+
         // validate phone number
         if (!phoneNumberField.value) {
             setHelperInvalid(phoneNumberField, 'Enter your phone number');
@@ -139,10 +130,10 @@ const handleOtpSumit = (submitOtpBtn) => {
         .confirmationResult
         .confirm(getOtp()).then(function (result) {
             // auth completed. onstatechange listener will fire
-
             if (result) {
                 handleAuthAnalytics(result);
             }
+            debugger
             sendAcqusition().then(handleLoggedIn).catch(handleLoggedIn);
         })
         .catch(function (error) {

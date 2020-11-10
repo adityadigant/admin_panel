@@ -191,7 +191,7 @@ const updateLocationList = (locations, start, fresh) => {
 const createLocationLi = (location) => {
     const li = createElement('a', {
         className: 'mdc-list-item user-list',
-        href: `/admin/duties/?id=${location.id}&canEdit=${location.canEdit}&location=${encodeURIComponent(location['location'])}`
+        href: `/admin/duties/index.html?id=${location.id}&canEdit=${location.canEdit}&location=${encodeURIComponent(location['location'])}`
     });
     li.dataset.id = location.id
     li.innerHTML = `<span class="mdc-list-item__ripple"></span>

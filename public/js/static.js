@@ -20,18 +20,12 @@ window.addEventListener('load', function () {
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
+      
         addLogoutBtn();
         // flush stored errors that were logged before auth
         flushStoredErrors()
     };
 });
-
-  //init drawer & menu for non-desktop devices
-  const drawer = new mdc.drawer.MDCDrawer(document.querySelector(".mdc-drawer"))
-  const menu = new mdc.iconButton.MDCIconButtonToggle(document.getElementById('menu'))
-  menu.listen('MDCIconButtonToggle:change', function (event) {
-    drawer.open = !drawer.open;
-  });
 })
 
 /**

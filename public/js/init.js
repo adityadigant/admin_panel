@@ -7,17 +7,7 @@ function initializeLogIn(el) {
     }
 
     if (!user) {
-      if (commonDom.progressBar) {
-        commonDom.progressBar.close()
-      }
-
       document.body.classList.remove('hidden');
-
-      if (window.location.pathname === '/app') {
-        redirect('');
-        return;
-      }
-
       login(el);
       return;
     };
@@ -44,7 +34,6 @@ const sendAcqusition = () => {
  * @param {Boolean} isNewUser 
  */
 function handleLoggedIn(isNewUser) {
-  addLogoutBtn();
   const param = parseURL();
   if (window.location.pathname === '/welcome' && param && param.get('action') === 'get-subscription') {
     handleWelcomePage();
@@ -73,11 +62,10 @@ const handleWelcomePage = () => {
  * Handle redirect based on custom claims
  * @param {Boolean} isNewUser 
  */
-const handleAuthRedirect = (isNewUser) => {
+const handleAuthRedirect = () => {
   firebase.auth().currentUser.getIdTokenResult().then(idTokenResult => {
-    // redirect('/admin/')
     if (idTokenResult.claims.support) return redirect('/support');
-    if (idTokenResult.claims.admin && idTokenResult.claims.admin.length > 0) return redirect('/admin/')
+    if (idTokenResult.claims.admin && idTokenResult.claims.admin.length > 0) return redirect('/admin/index.html')
     redirect('/join');
   })
 }

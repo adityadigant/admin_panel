@@ -490,7 +490,9 @@ const signOut = () => {
  * @param {string} pathname 
  */
 const redirect = (pathname) => {
-    window.location = window.location.origin + pathname;
+    console.log(window.location.origin + pathname +(pathname.includes('.html') ? '' :'.html'))
+    debugger;
+    window.location = window.location.origin + pathname +(pathname.includes('.html') ? '' :'.html');
 }
 
 /**

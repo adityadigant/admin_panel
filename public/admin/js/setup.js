@@ -17,7 +17,7 @@ window.addEventListener('load', () => {
     firebase.auth().onAuthStateChanged(function (user) {
         // if user is logged out redirect to login page
         if (!user) {
-            redirect('/login')
+            redirect('/')
             return
         }
         handleDrawerView()
@@ -63,7 +63,7 @@ window.addEventListener('load', () => {
                         http('GET', `${appKeys.getBaseUrl()}/api/office?office=${selectedOffice}`).then(response => {
                             window.sessionStorage.setItem('office', selectedOffice)
                             window.sessionStorage.setItem('officeId', response.results[0].officeId);
-                            redirect('/admin/')
+                            redirect('/admin/index.html')
                         }).catch(err=>{
                             appLoader.remove()
                             showSnacksApiResponse('Please try again later')

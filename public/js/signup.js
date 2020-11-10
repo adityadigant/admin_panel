@@ -187,7 +187,7 @@ const initJourney = () => {
         };
 
         if (!window.location.hash) {
-            redirect('/admin/')
+            redirect('/admin/index.html')
             return
         }
         // for existing offices get office activity and start from choose plan 
@@ -205,7 +205,7 @@ const initJourney = () => {
         }).then(officeActivity => {
             //safety check if users goes back to this screen
             if (officeHasMembership(officeActivity.schedule) && !isOfficeMembershipExpired(officeActivity.schedule)) {
-                redirect('/admin/')
+                redirect('/admin/index.html')
             }
             localStorage.removeItem('completed');
             const data = {

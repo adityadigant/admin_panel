@@ -19,9 +19,9 @@ const init = (office, officeId) => {
 
     if (canEdit === "true" && id) {
         editIcon.classList.remove("hidden");
-        editIcon.href = './manageDuty?id=' + id + '&location=' + dutyLocation;
+        editIcon.href = './manageDuty.html?id=' + id + '&location=' + dutyLocation;
     }
-    createDuty.href = './manageDuty?location=' + dutyLocation;
+    createDuty.href = './manageDuty.html?location=' + dutyLocation;
 
     window
         .database

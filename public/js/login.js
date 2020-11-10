@@ -8,6 +8,11 @@ const parseRedirect = (type) => {
 const login = (el) => {
     if (!el) return;
     el.innerHTML = loginDom();
+    document.getElementById('signup-up--login-box').addEventListener('click',() => {
+        history.pushState('signup',null,window.location.pathname+'?signup=1')
+        // redirect(`${window.location.pathname}index.html?signup=1`)
+        window.location.reload();
+    })
     linearProgress = new mdc.linearProgress.MDCLinearProgress(document.getElementById('card-progress'));
     if (appKeys.getMode() === 'dev') {
         firebase.auth().settings.appVerificationDisabledForTesting = true
@@ -145,7 +150,6 @@ const updateAuth = (el, auth) => {
 
             if (auth.emailVerified && auth.email) {
                 linearProgress.close();
-                debugger;
                 return window.location.reload();
             };
 
@@ -205,7 +209,7 @@ const loginDom = () => {
                     <img src='./img/icon.png' class='logo'>
                 </div>
                 <div class='text-indicator'>
-                    <p class='mdc-typography--headline6 text-center'>Log into Growthfile</p>
+                    <p class='mdc-typography--headline6 text-center'>Log into OnDuty</p>
                     
                 </div>
             </div>
@@ -232,7 +236,7 @@ const loginDom = () => {
                 </div>
                 <div class='full-width text-center mt-20 account-create--section'>
                     <span>Don't have an account ? 
-                        <a href='./signup' class='ml-10 sign-up-link'>Sign up</a>
+                        <span  class='ml-10 sign-up-link' id="signup-up--login-box">Sign up</span>
                     </span>
                 </div>
             </div>

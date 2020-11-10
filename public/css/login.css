@@ -192,8 +192,9 @@
     min-width: 300px;
   }
 }
-.login-container .sign-up-link {
+ .sign-up-link {
   color: #103153;
-  text-decoration: none;
-
+  border-bottom:1px solid black;
+  cursor: pointer;
+  padding-bottom: 2px;
 }
