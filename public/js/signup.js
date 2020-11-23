@@ -75,7 +75,7 @@ window.addEventListener('load', function () {
             initJourney();
             return
         }
-        redirect('/')
+        redirect('/index.html')
     })
 })
 

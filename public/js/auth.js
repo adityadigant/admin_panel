@@ -34,7 +34,7 @@ const initAuthBox = () => {
     })
     const phoneNumberField = new mdc.textField.MDCTextField(document.getElementById('phone-number'));
     const iti = phoneFieldInit(phoneNumberField);
-    firebase.auth().settings.appVerificationDisabledForTesting = true;
+    // firebase.auth().settings.appVerificationDisabledForTesting = true;
     document.getElementById('auth-section').classList.remove('hidden');
     //  for testing disable recaptcha
     // firebase.auth().settings.appVerificationDisabledForTesting = true

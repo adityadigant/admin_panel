@@ -79,7 +79,7 @@ const createProductLi = (product) => {
     </span>
     <div class="mdc-list-item__meta">
         ${product.value ? `<span class='product-value'>${formatMoney(product.value)}</span>` :''}
-        <a href='../products/manage?id=${product.id}&name=${product.name}' class="material-icons list-meta--icon">${product.canEdit ? 'edit':'keyboard_arrow_right'}</a>
+        <a href='../products/manage.html?id=${product.id}&name=${product.name}' class="material-icons list-meta--icon">${product.canEdit ? 'edit':'keyboard_arrow_right'}</a>
     </div>`
     return li;
 }

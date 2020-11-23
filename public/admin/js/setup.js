@@ -17,7 +17,7 @@ window.addEventListener('load', () => {
     firebase.auth().onAuthStateChanged(function (user) {
         // if user is logged out redirect to login page
         if (!user) {
-            redirect('/')
+            redirect('/index.html')
             return
         }
         handleDrawerView()
@@ -27,13 +27,14 @@ window.addEventListener('load', () => {
         drawer = new mdc.drawer.MDCDrawer(document.querySelector(".mdc-drawer"))
 
         window.mdc.autoInit();
-       
+
         firebase.auth().currentUser.getIdTokenResult().then(idTokenResult => {
-            
+
             const claims = idTokenResult.claims;
-    
-        //    if (claims.support) return redirect('/support');
+
+            if (claims.support) return redirect('/support');
             if (claims.admin && claims.admin.length) {
+
                 // if there are multiple offices fill the drawer header with office list
                 if (claims.admin.length > 1) {
                     hasMultipleOffice = true
@@ -43,20 +44,19 @@ window.addEventListener('load', () => {
                     });
                     const officeSelect = new mdc.select.MDCSelect(document.getElementById('office-select'));
                     // document.querySelector('#office-select .mdc-select__selected-text').textContent = window.sessionStorage.getItem('office')
-                    if(claims.admin.indexOf(window.sessionStorage.getItem('office')) > -1) {
+                    if (claims.admin.indexOf(window.sessionStorage.getItem('office')) > -1) {
                         officeSelect.selectedIndex = claims.admin.indexOf(window.sessionStorage.getItem('office'))
+                    } else {
+                        officeSelect.selectedIndex = 0
                     }
-                    else {
-                        officeSelect.selectedIndex =  0
-                    }
-                    
+
                     // drawer.unlisten('MDCList:action');
                     let initOnce = 0
-                    drawer.unlisten('MDCList:action',sel)
-                    var sel = officeSelect.listen('MDCSelect:change',(ev)=>{
+                    drawer.unlisten('MDCList:action', sel)
+                    var sel = officeSelect.listen('MDCSelect:change', (ev) => {
 
                         initOnce++
-                        if(initOnce % 2 !== 0) return
+                        if (initOnce % 2 !== 0) return
                         console.log(ev)
                         const selectedOffice = ev.detail.value
                         appLoader.show()
@@ -64,7 +64,7 @@ window.addEventListener('load', () => {
                             window.sessionStorage.setItem('office', selectedOffice)
                             window.sessionStorage.setItem('officeId', response.results[0].officeId);
                             redirect('/admin/index.html')
-                        }).catch(err=>{
+                        }).catch(err => {
                             appLoader.remove()
                             showSnacksApiResponse('Please try again later')
                         })
@@ -131,7 +131,7 @@ const initializeIDB = (office) => {
      */
     req.onupgradeneeded = function (event) {
         if (event.oldVersion == 0) {
-            try {                
+            try {
                 appLoader.show();
             } catch (e) {
                 console.log(e)
@@ -252,54 +252,54 @@ const startApplication = (office) => {
         return getOfficeActivity(officeId)
     }).then(officeActivity => {
 
-            appLoader.remove();
-            const dialog = new mdc.dialog.MDCDialog(document.getElementById('payment-dialog'));
-            const dialogBody = document.getElementById('payment-dialog--body');
-            const dialogTitle = document.getElementById('my-dialog-title');
+        appLoader.remove();
+        const dialog = new mdc.dialog.MDCDialog(document.getElementById('payment-dialog'));
+        const dialogBody = document.getElementById('payment-dialog--body');
+        const dialogTitle = document.getElementById('my-dialog-title');
 
-            document.getElementById('choose-plan-button').href = `../join.html#payment?office=${encodeURIComponent(office)}`
-            
-            const schedule = officeActivity.schedule;
-            const isUserFirstContact = officeActivity.attachment['First Contact'].value === firebase.auth().currentUser.phoneNumber;
-            if(!hasMultipleOffice) {
-                dialog.scrimClickAction = "";
+        document.getElementById('choose-plan-button').href = `../join.html#payment?office=${encodeURIComponent(office)}`
+
+        const schedule = officeActivity.schedule;
+        const isUserFirstContact = officeActivity.attachment['First Contact'].value === firebase.auth().currentUser.phoneNumber;
+        if (!hasMultipleOffice) {
+            dialog.scrimClickAction = "";
+        }
+
+        if (!officeHasMembership(schedule)) {
+            dialogTitle.textContent = 'You are just 1 step away from tracking your employees successfully.';
+            dialogBody.textContent = 'Choose your plan to get started.';
+
+            officeActivity.geopoint = {
+                latitude: 0,
+                longitude: 0
             }
-
-            if (!officeHasMembership(schedule)) {
-                dialogTitle.textContent = 'You are just 1 step away from tracking your employees successfully.';
-                dialogBody.textContent = 'Choose your plan to get started.';
-
-                officeActivity.geopoint = {
-                    latitude: 0,
-                    longitude: 0
-                }
-                http('PUT', `${appKeys.getBaseUrl()}/api/activities/update`, officeActivity).then(res => {
-                    if (isUserFirstContact) {
-                        dialog.open();
-                        return
-                    }
-                    dialogBody.textContent = 'Please ask the business owner to complete the payment';
-                    dialog.open();
-                });
-                return
-            }
-
-            if (isOfficeMembershipExpired(schedule)) {
-                const diff = getDateDiff(schedule);
-                if (diff > 3) {
-                    dialogTitle.textContent = 'Your plan has expired.'
-                    dialogBody.textContent = 'Choose plan to renew now.'
-                }
+            http('PUT', `${appKeys.getBaseUrl()}/api/activities/update`, officeActivity).then(res => {
                 if (isUserFirstContact) {
                     dialog.open();
                     return
-                };
+                }
+                dialogBody.textContent = 'Please ask the business owner to complete the payment';
+                dialog.open();
+            });
+            return
+        }
 
-                dialogBody.textContent = 'Please ask the business owner to renew the payment';
+        if (isOfficeMembershipExpired(schedule)) {
+            const diff = getDateDiff(schedule);
+            if (diff > 3) {
+                dialogTitle.textContent = 'Your plan has expired.'
+                dialogBody.textContent = 'Choose plan to renew now.'
+            }
+            if (isUserFirstContact) {
                 dialog.open();
                 return
-            }
-            init(office, officeActivity.activityId)
+            };
+
+            dialogBody.textContent = 'Please ask the business owner to renew the payment';
+            dialog.open();
+            return
+        }
+        init(office, officeActivity.activityId)
     }).catch(console.error)
 
     //init drawer & menu for non-desktop devices
@@ -350,7 +350,7 @@ const getOfficeId = (office) => {
                 return
             }
             http('GET', `${appKeys.getBaseUrl()}/api/office?office=${encodeURIComponent(office)}`).then(response => {
-                if(!response.results.length) {
+                if (!response.results.length) {
                     showSnacksApiResponse('Office not found')
                     return
                 }
@@ -392,4 +392,3 @@ const officeList = (name) => {
     <span class="mdc-list-item__text">${name}</span>`
     return li
 }
-

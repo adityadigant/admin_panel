@@ -57,7 +57,7 @@ const init = (office, officeId) => {
 const createDutyBox = (duty, officeId,dutyLocation) => {
 
     const clone = document.getElementById('clone-node').cloneNode(true);
-    clone.querySelector('.edit-duty').href = `./manageDuty?id=${duty.id}&location=${dutyLocation}`
+    clone.querySelector('.edit-duty').href = `./manageDuty.html?id=${duty.id}&location=${dutyLocation}`
     clone.querySelector('.duty-start').textContent = formatDutyTime(duty.startTime);
     clone.querySelector('.duty-end').textContent = formatDutyTime(duty.endTime)
 
