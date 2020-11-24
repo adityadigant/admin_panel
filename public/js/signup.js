@@ -191,6 +191,10 @@ const initJourney = () => {
             return
         }
         // for existing offices get office activity and start from choose plan 
+        if(!window.location.hash.split("?")[1])  {
+            redirect('/join.html?createNew=1')
+            return
+        }
         const office = decodeURIComponent(window.location.hash.split("?")[1].split("=")[1]);
         http('GET', `${appKeys.getBaseUrl()}/api/office?office=${office}`).then(officeMeta => {
             if (!officeMeta.results.length) {
@@ -566,10 +570,12 @@ function officeFlow(category = onboarding_data_save.get().category) {
         type: 'number',
         label: 'Year',
         id: 'year',
+        maxlength:'4',
+        pattern:"\d*",
         autocomplete: 'bday-year',
         max: new Date().getFullYear(),
         value: savedData.yearOfEstablishment || '',
-        min: 1
+        min: 1900
     })
     const logoCont = createElement('div', {
         className: 'logo-container'
@@ -1990,7 +1996,9 @@ const createRequestBodyForOffice = (officeData) => {
  * @returns {Boolean} 
  */
 const isValidYear = (year) => {
-    return /^\d+$/.test(year)
+    if(!/^\d+$/.test(year)) return;
+    if(year > new Date().getFullYear() || year < 1800) return;
+    return true
 }
 
 const handleOfficeDescription = (category) => {

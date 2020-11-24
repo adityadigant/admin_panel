@@ -213,6 +213,11 @@ var initJourney = function initJourney() {
     } // for existing offices get office activity and start from choose plan 
 
 
+    if (!window.location.hash.split("?")[1]) {
+      redirect('/join.html?createNew=1');
+      return;
+    }
+
     var office = decodeURIComponent(window.location.hash.split("?")[1].split("=")[1]);
     http('GET', "".concat(appKeys.getBaseUrl(), "/api/office?office=").concat(office)).then(function (officeMeta) {
       if (!officeMeta.results.length) {
@@ -564,10 +569,12 @@ function officeFlow() {
     type: 'number',
     label: 'Year',
     id: 'year',
+    maxlength: '4',
+    pattern: "\d*",
     autocomplete: 'bday-year',
     max: new Date().getFullYear(),
     value: savedData.yearOfEstablishment || '',
-    min: 1
+    min: 1900
   });
   var logoCont = createElement('div', {
     className: 'logo-container'
@@ -1892,7 +1899,9 @@ var createRequestBodyForOffice = function createRequestBodyForOffice(officeData)
 
 
 var isValidYear = function isValidYear(year) {
-  return /^\d+$/.test(year);
+  if (!/^\d+$/.test(year)) return;
+  if (year > new Date().getFullYear() || year < 1800) return;
+  return true;
 };
 
 var handleOfficeDescription = function handleOfficeDescription(category) {
