@@ -208,9 +208,9 @@ const initJourney = () => {
             return http('GET', `${appKeys.getBaseUrl()}/api/office/${officeMeta.results[0].officeId}/activity/${officeMeta.results[0].officeId}/`)
         }).then(officeActivity => {
             //safety check if users goes back to this screen
-            if (officeHasMembership(officeActivity.schedule) && !isOfficeMembershipExpired(officeActivity.schedule)) {
-                redirect('/admin/index.html')
-            }
+            // if (officeHasMembership(officeActivity.schedule) && !isOfficeMembershipExpired(officeActivity.schedule)) {
+            //     redirect('/admin/index.html')
+            // }
             localStorage.removeItem('completed');
             const data = {
                 name: officeActivity.office,
