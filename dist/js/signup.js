@@ -232,10 +232,9 @@ var initJourney = function initJourney() {
       return http('GET', "".concat(appKeys.getBaseUrl(), "/api/office/").concat(officeMeta.results[0].officeId, "/activity/").concat(officeMeta.results[0].officeId, "/"));
     }).then(function (officeActivity) {
       //safety check if users goes back to this screen
-      if (officeHasMembership(officeActivity.schedule) && !isOfficeMembershipExpired(officeActivity.schedule)) {
-        redirect('/admin/index.html');
-      }
-
+      // if (officeHasMembership(officeActivity.schedule) && !isOfficeMembershipExpired(officeActivity.schedule)) {
+      //     redirect('/admin/index.html')
+      // }
       localStorage.removeItem('completed');
       var data = {
         name: officeActivity.office,

@@ -1,5 +1,4 @@
-const createDuty = document.getElementById("create-duty");
-const editIcon = document.getElementById("edit-location")
+// const createDuty = document.getElementById("create-duty");
 const ul = document.getElementById("duties-list");
 const formHeading = document.getElementById('form-heading');
 const dutiesCardContainer = document.getElementById('duty-cards--container');
@@ -10,18 +9,18 @@ const init = (office, officeId) => {
     const id = search.get("id");
     const dutyLocation = search.get("location");
 
-    if (!id) {
+    if (!id || !dutyLocation) {
         window.alert("No location found");
         return
     }
-
+    
     formHeading.textContent = dutyLocation;
 
-    if (canEdit === "true" && id) {
-        editIcon.classList.remove("hidden");
-        editIcon.href = './manageDuty.html?id=' + id + '&location=' + dutyLocation;
-    }
-    createDuty.href = './manageDuty.html?location=' + dutyLocation;
+    // if (canEdit === "true" && id) {
+    //     editIcon.classList.remove("hidden");
+    //     editIcon.href = './manageDuty.html?id=' + id + '&location=' + dutyLocation;
+    // }
+    // createDuty.href = './manageDuty.html?location=' + dutyLocation;
 
     window
         .database
@@ -30,6 +29,8 @@ const init = (office, officeId) => {
         .get(dutyLocation)
         .onsuccess = function (e) {
             const record = e.target.result;
+            if(!record) return;
+
             const duties = record.duties || [];
             const sorted = duties.sort((a, b) => b.timestamp - a.timestamp);
 

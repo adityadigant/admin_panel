@@ -56,15 +56,16 @@ var getLocationsDetails = function getLocationsDetails(url) {
   return new Promise(function (resolve, reject) {
     http('GET', url).then(function (response) {
       var tx = window.database.transaction(["locations", "meta"], "readwrite");
+      var locationsArray = response.results.filter(function (r) {
+        return r.id && r.location;
+      });
+      response.results = locationsArray;
 
-      for (var index = 0; index < response.results.length; index++) {
-        var result = response.results[index];
-
-        if (result.location) {
-          result['search_key'] = result.location ? result.location.toLowerCase() : null;
-          var locationStore = tx.objectStore("locations");
-          locationStore.put(result);
-        }
+      for (var index = 0; index < locationsArray.length; index++) {
+        var result = locationsArray[index];
+        result['search_key'] = result.location ? result.location.toLowerCase() : null;
+        var locationStore = tx.objectStore("locations");
+        locationStore.put(result);
       }
 
       var metaStore = tx.objectStore("meta");

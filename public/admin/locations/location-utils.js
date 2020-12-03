@@ -12,7 +12,7 @@ const getLocationList = (props, onSuccess, onError) => {
         .onsuccess = function (event) {
             const cursor = event.target.result;
             if (!cursor) return;
-            if(officeId !== cursor.value.officeId) {
+            if (officeId !== cursor.value.officeId) {
                 cursor.continue();
                 return;
             };
@@ -54,14 +54,15 @@ const getLocationsDetails = (url) => {
         http('GET', url).then(response => {
             const tx = window.database
                 .transaction(["locations", "meta"], "readwrite");
-            for (let index = 0; index < response.results.length; index++) {
-                const result = response.results[index];
-                if (result.location) {
-                    result['search_key'] = result.location ? result.location.toLowerCase() : null;
 
-                    const locationStore = tx.objectStore("locations")
-                    locationStore.put(result)
-                }
+            const locationsArray = response.results.filter(r => r.id && r.location);
+            response.results = locationsArray;
+
+            for (let index = 0; index < locationsArray.length; index++) {
+                const result = locationsArray[index];
+                result['search_key'] = result.location ? result.location.toLowerCase() : null;
+                const locationStore = tx.objectStore("locations")
+                locationStore.put(result)
             }
             const metaStore = tx.objectStore("meta");
             metaStore.get("meta").onsuccess = function (e) {
@@ -183,7 +184,7 @@ const updateLocationList = (locations, start, fresh) => {
             freshCount++
         }
     })
-    if(!locations.length) {
+    if (!locations.length) {
         ul.appendChild(emptyCard('No locations found'))
     }
 }

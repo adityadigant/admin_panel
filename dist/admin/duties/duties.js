@@ -1,5 +1,4 @@
-var createDuty = document.getElementById("create-duty");
-var editIcon = document.getElementById("edit-location");
+// const createDuty = document.getElementById("create-duty");
 var ul = document.getElementById("duties-list");
 var formHeading = document.getElementById('form-heading');
 var dutiesCardContainer = document.getElementById('duty-cards--container');
@@ -10,22 +9,20 @@ var init = function init(office, officeId) {
   var id = search.get("id");
   var dutyLocation = search.get("location");
 
-  if (!id) {
+  if (!id || !dutyLocation) {
     window.alert("No location found");
     return;
   }
 
-  formHeading.textContent = dutyLocation;
-
-  if (canEdit === "true" && id) {
-    editIcon.classList.remove("hidden");
-    editIcon.href = './manageDuty.html?id=' + id + '&location=' + dutyLocation;
-  }
-
-  createDuty.href = './manageDuty.html?location=' + dutyLocation;
+  formHeading.textContent = dutyLocation; // if (canEdit === "true" && id) {
+  //     editIcon.classList.remove("hidden");
+  //     editIcon.href = './manageDuty.html?id=' + id + '&location=' + dutyLocation;
+  // }
+  // createDuty.href = './manageDuty.html?location=' + dutyLocation;
 
   window.database.transaction("locations").objectStore("locations").get(dutyLocation).onsuccess = function (e) {
     var record = e.target.result;
+    if (!record) return;
     var duties = record.duties || [];
     var sorted = duties.sort(function (a, b) {
       return b.timestamp - a.timestamp;
