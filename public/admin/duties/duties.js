@@ -5,7 +5,6 @@ const dutiesCardContainer = document.getElementById('duty-cards--container');
 
 const init = (office, officeId) => {
     const search = new URLSearchParams(window.location.search);
-    const canEdit = search.get("canEdit");
     const id = search.get("id");
     const dutyLocation = search.get("location");
 
@@ -13,15 +12,7 @@ const init = (office, officeId) => {
         window.alert("No location found");
         return
     }
-    
     formHeading.textContent = dutyLocation;
-
-    // if (canEdit === "true" && id) {
-    //     editIcon.classList.remove("hidden");
-    //     editIcon.href = './manageDuty.html?id=' + id + '&location=' + dutyLocation;
-    // }
-    // createDuty.href = './manageDuty.html?location=' + dutyLocation;
-
     window
         .database
         .transaction("locations")
@@ -29,14 +20,14 @@ const init = (office, officeId) => {
         .get(dutyLocation)
         .onsuccess = function (e) {
             const record = e.target.result;
-            if(!record) return;
-
-            const duties = record.duties || [];
-            const sorted = duties.sort((a, b) => b.timestamp - a.timestamp);
-
-            sorted.forEach(duty => {
-                dutiesCardContainer.appendChild(createDutyBox(duty, officeId,dutyLocation))
-            });
+            if(record) {
+                const duties = record.duties || [];
+                const sorted = duties.sort((a, b) => b.timestamp - a.timestamp);
+    
+                sorted.forEach(duty => {
+                    dutiesCardContainer.appendChild(createDutyBox(duty, officeId,dutyLocation))
+                });
+            }
 
             http('GET', `${appKeys.getBaseUrl()}/api/office/${officeId}/location?location=${dutyLocation}`).then(res => {
                 window

@@ -191,7 +191,7 @@ var updateLocationList = function updateLocationList(locations, start, fresh) {
 var createLocationLi = function createLocationLi(location) {
   var li = createElement('a', {
     className: 'mdc-list-item user-list',
-    href: "/admin/duties/index.html?id=".concat(location.id, "&canEdit=").concat(location.canEdit, "&location=").concat(encodeURIComponent(location['location']))
+    href: location['location'] && location.id ? "/admin/duties/index.html?id=".concat(location.id, "&canEdit=").concat(location.canEdit, "&location=").concat(encodeURIComponent(location['location'])) : '#'
   });
   li.dataset.id = location.id;
   li.innerHTML = "<span class=\"mdc-list-item__ripple\"></span>\n    <span class=\"mdc-list-item__text\">\n      <span class=\"mdc-list-item__primary-text\">".concat(location['location'], "</span>\n      <span class=\"mdc-list-item__secondary-text\">").concat(location['address'], "</span>\n    </span>\n    <span class='mdc-list-item__meta list-time'>").concat(formatCreatedTime(location.timestamp), "</span>");

@@ -5,7 +5,6 @@ var dutiesCardContainer = document.getElementById('duty-cards--container');
 
 var init = function init(office, officeId) {
   var search = new URLSearchParams(window.location.search);
-  var canEdit = search.get("canEdit");
   var id = search.get("id");
   var dutyLocation = search.get("location");
 
@@ -14,22 +13,21 @@ var init = function init(office, officeId) {
     return;
   }
 
-  formHeading.textContent = dutyLocation; // if (canEdit === "true" && id) {
-  //     editIcon.classList.remove("hidden");
-  //     editIcon.href = './manageDuty.html?id=' + id + '&location=' + dutyLocation;
-  // }
-  // createDuty.href = './manageDuty.html?location=' + dutyLocation;
+  formHeading.textContent = dutyLocation;
 
   window.database.transaction("locations").objectStore("locations").get(dutyLocation).onsuccess = function (e) {
     var record = e.target.result;
-    if (!record) return;
-    var duties = record.duties || [];
-    var sorted = duties.sort(function (a, b) {
-      return b.timestamp - a.timestamp;
-    });
-    sorted.forEach(function (duty) {
-      dutiesCardContainer.appendChild(createDutyBox(duty, officeId, dutyLocation));
-    });
+
+    if (record) {
+      var duties = record.duties || [];
+      var sorted = duties.sort(function (a, b) {
+        return b.timestamp - a.timestamp;
+      });
+      sorted.forEach(function (duty) {
+        dutiesCardContainer.appendChild(createDutyBox(duty, officeId, dutyLocation));
+      });
+    }
+
     http('GET', "".concat(appKeys.getBaseUrl(), "/api/office/").concat(officeId, "/location?location=").concat(dutyLocation)).then(function (res) {
       window.database.transaction("locations", 'readwrite').objectStore("locations").put(res.results[0]);
       var freshDuties = res.results[0].duties || [];
