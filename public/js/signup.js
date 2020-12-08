@@ -1283,10 +1283,7 @@ const showTransactionDialog = (paymentResponse, officeId) => {
         dialogTitle.classList.add('mdc-theme--error')
         dialogBtn.classList.add('mdc-button--raised-error');
         dialogBtn.querySelector('.mdc-button__label').textContent = 'RETRY'
-
     }
-
-
     document.getElementById('txn-status').textContent = paymentResponse.txStatus;
     document.getElementById('txn-order-id').textContent = paymentResponse.orderId;
     document.getElementById('txn-amount').textContent = paymentResponse.orderAmount;
