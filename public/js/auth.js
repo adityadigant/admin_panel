@@ -318,7 +318,7 @@ const otpKeyUp = (e) => {
             };
 
             document.getElementById('submit-otp').disabled = !otpBoxesFilled()
-        }, 300)
+        }, 10)
 
         return true
     }
