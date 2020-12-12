@@ -635,8 +635,6 @@ ul.breadcrumb li:last-of-type {
     width: 100%;
 }
 
-
-
 @media (max-width:320px) {
     .download-app-link {
         display: block;
@@ -646,4 +644,4 @@ ul.breadcrumb li:last-of-type {
 /** pricing page hide **/
 a[href$='pricing.html'] {
     display: none;
-  }
+}

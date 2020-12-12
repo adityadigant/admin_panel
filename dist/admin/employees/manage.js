@@ -72,13 +72,14 @@ var init = function init(office, officeId) {
     activityBody.setAttachment('Employee Code', code.value, 'string');
     activityBody.setAttachment('First Supervisor', supervisorInput.dataset.number, 'phoneNumber');
     var requestBody = activityBody.get();
-    getUser(firebase.auth().currentUser.phoneNumber).then(function (userRecord) {
+    getUser(officeId, firebase.auth().currentUser.phoneNumber).then(function (userRecord) {
       createEmployee(requestParams, requestBody, hasEmployeeSubscription(userRecord));
     });
   });
 };
 
 var hasEmployeeSubscription = function hasEmployeeSubscription(userRecord) {
+  if (!userRecord) return;
   if (userRecord.subscriptions.some(function (sub) {
     return sub.name === 'employee';
   })) return true;
@@ -197,9 +198,10 @@ var updateEmployeeFields = function updateEmployeeFields(officeId, activity) {
       return;
     }
 
-    getUser(employeeNumber).then(function (rec) {
-      //if employee is another admin don't show
-      if (rec.adminId) return; // emploeye is neither admin nor owner
+    getUser(officeId, employeeNumber).then(function (rec) {
+      if (!rec) return; //if employee is another admin don't show
+
+      if (rec.adminId) return; // employee is neither admin nor owner
 
       document.querySelector('.employee-status').classList.remove('hidden');
     });
@@ -212,17 +214,21 @@ var updateEmployeeFields = function updateEmployeeFields(officeId, activity) {
  */
 
 
-var getUser = function getUser(phonenumber) {
-  return new Promise(function (resolve) {
+var getUser = function getUser(officeId, phonenumber) {
+  return new Promise(function (resolve, reject) {
     window.database.transaction('users').objectStore('users').get(phonenumber).onsuccess = function (e) {
-      resolve(e.target.result);
+      var record = e.target.result;
+      if (record) return resolve(record);
+      getUsersDetails("".concat(appKeys.getBaseUrl(), "/api/office/").concat(officeId, "/user?phoneNumber=").concat(encodeURIComponent(phonenumber))).then(function (response) {
+        resolve(response.results[0]);
+      }).catch(reject);
     };
   });
 };
 
 var statusChange = function statusChange() {
   var removeDialog = new mdc.dialog.MDCDialog(document.getElementById('remove-employee-confirm-dialog'));
-  removeDialog.content_.textContent = "Are you sure you want to remove ".concat(employeeActivity.attachment.Name.value || employeeActivity.attachment.PhoneNumber.value, " as an employee ?\n     If you change your mind you will have to add them again manually.");
+  removeDialog.content_.textContent = "Are you sure you want to remove ".concat(employeeActivity.attachment.Name.value || employeeActivity.attachment['Phone Number'].value, " as an employee ?\n     If you change your mind you will have to add them again manually.");
   removeDialog.open();
   removeDialog.listen('MDCDialog:closed', function (ev) {
     if (ev.detail.action !== "accept") {

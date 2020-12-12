@@ -1,3 +1,4 @@
+
 const employeeName = document.getElementById('name');
 const phonenumber = document.getElementById('phonenumber');
 const designation = document.getElementById('designation');
@@ -80,7 +81,7 @@ const init = (office, officeId) => {
 
         const requestBody = activityBody.get();
 
-        getUser(firebase.auth().currentUser.phoneNumber).then(userRecord => {
+        getUser(officeId,firebase.auth().currentUser.phoneNumber).then(userRecord => {
           
             createEmployee(requestParams, requestBody, hasEmployeeSubscription(userRecord))
         })
@@ -88,6 +89,7 @@ const init = (office, officeId) => {
 }
 
 const hasEmployeeSubscription = (userRecord) => {
+    if(!userRecord) return;
     if(userRecord.subscriptions.some(sub=>sub.name==='employee')) return true;
     if(userRecord.subscriptions.filter(sub => sub.name === "subscription" || sub.name === "employee").length >= 2) return true;
     if(userRecord.subscriptions.some(sub=>sub.name ==='subscription')) return false
@@ -193,11 +195,12 @@ const updateEmployeeFields = (officeId, activity) => {
             return;
         }
 
-        getUser(employeeNumber).then(rec => {
+        getUser(officeId,employeeNumber).then(rec => {
+            if(!rec) return
             //if employee is another admin don't show
             if (rec.adminId) return;
 
-            // emploeye is neither admin nor owner
+            // employee is neither admin nor owner
             document.querySelector('.employee-status').classList.remove('hidden');
         })
     })
@@ -209,10 +212,14 @@ const updateEmployeeFields = (officeId, activity) => {
  * @param {string} phonenumber 
  * @returns {object} e.target.result
  */
-const getUser = (phonenumber) => {
-    return new Promise(resolve => {
+const getUser = (officeId,phonenumber) => {
+    return new Promise((resolve,reject) => {
         window.database.transaction('users').objectStore('users').get(phonenumber).onsuccess = function (e) {
-            resolve(e.target.result)
+            const record = e.target.result;
+            if(record) return resolve(record)
+            getUsersDetails(`${appKeys.getBaseUrl()}/api/office/${officeId}/user?phoneNumber=${encodeURIComponent(phonenumber)}`).then(response => {
+                resolve(response.results[0]);
+            }).catch(reject)
         }
     })
 }
@@ -221,7 +228,7 @@ const getUser = (phonenumber) => {
 
 const statusChange = () => {
     const removeDialog = new mdc.dialog.MDCDialog(document.getElementById('remove-employee-confirm-dialog'))
-    removeDialog.content_.textContent = `Are you sure you want to remove ${employeeActivity.attachment.Name.value || employeeActivity.attachment.PhoneNumber.value} as an employee ?
+    removeDialog.content_.textContent = `Are you sure you want to remove ${employeeActivity.attachment.Name.value || employeeActivity.attachment['Phone Number'].value} as an employee ?
      If you change your mind you will have to add them again manually.`
     removeDialog.open()
     removeDialog.listen('MDCDialog:closed', (ev) => {

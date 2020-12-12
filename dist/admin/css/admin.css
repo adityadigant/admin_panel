@@ -97,17 +97,17 @@
     min-width: 150px;
 }
 
-.mdc-fab--action .straight-loader {
+.mdc-fab--action .straight-loader , .form-submit .straight-loader {
     display: none;
     color: var(--mdc-theme-secondary);
     top: -10px;
 }
 
-.mdc-fab--action.active .straight-loader {
+.mdc-fab--action.active .straight-loader , .form-submit.active .straight-loader {
     display: block;
 }
 
-.mdc-fab--action.active .mdc-fab__label {
+.mdc-fab--action.active .mdc-fab__label, .form-submit.active .mdc-fab__label {
     display: none;
 }
 
@@ -589,39 +589,6 @@ body {
 }
 
 
-
-
-
-
-/** account section **/
-.account-section {
-    margin-top: 20px !important;
-    padding: 16px;
-}
-
-.account-photo {
-    position: relative;
-    display: block;
-    margin: 0 auto;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background-image: url(../../img/person.png);
-    background-position: center;
-    background-size: contain;
-    padding: 10px;
-    border: 1px solid #ccc;
-}
-
-.account-photo .upload-btn {
-    background-color: var(--mdc-theme-primary);
-    border-radius: 50%;
-    position: absolute;
-    right: 0;
-    bottom: 8px;
-    cursor: pointer;
-    color: white;
-}
 
 .max-480 {
     max-width: 480px;
